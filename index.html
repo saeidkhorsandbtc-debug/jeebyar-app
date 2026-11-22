@@ -1,0 +1,4902 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="light" data-palette="emerald">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>جیب‌یار | مدیریت هوشمند بودجه و پیامک‌های بانکی</title>
+  <meta name="description" content="اپلیکیشن مدیریت هوشمند بودجه، حساب‌های بانکی، تقویم جلالی و تحلیلگر پیامک‌های بانکی" />
+  <meta name="theme-color" id="metaThemeColor" content="#1b6b5c" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="جیب‌یار" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%231b6b5c'/%3E%3Cstop offset='100%25' stop-color='%230f4c41'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='128' height='128' rx='30' fill='url(%23g)'/%3E%3Cpath d='M92 44V34a6 6 0 0 0-6-6H36a10 10 0 0 0 0 20h56a6 6 0 0 1 6 6v14H84a10 10 0 0 0 0 20h14a6 6 0 0 0 6-6V74a6 6 0 0 0-6-6' fill='none' stroke='%23fff' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M26 38v54a10 10 0 0 0 10 10h56a6 6 0 0 0 6-6V88' fill='none' stroke='%23fff' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+  <link rel="apple-touch-icon" href="./icon-192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* =========================================================
+       BASE TOKENS & SEMANTIC COLORS (LIGHT DEFAULT - EMERALD)
+       ========================================================= */
+    :root {
+      --md-primary: #1b6b5c;
+      --md-on-primary: #ffffff;
+      --md-primary-container: #b5f0df;
+      --md-on-primary-container: #00201a;
+      --md-secondary: #4b635c;
+      --md-secondary-container: #cde8df;
+      --md-on-secondary-container: #07201a;
+      --md-outer-bg: #dde4e2;
+      --md-surface: #f5f7f6;
+      --md-surface-card: #ffffff;
+      --md-surface-variant: #e6ecea;
+      --md-on-surface: #171d1b;
+      --md-on-surface-variant: #56615e;
+      --md-outline: #d2dcd9;
+      --md-topbar-bg: rgba(245, 247, 246, 0.9);
+      --brand-gradient: linear-gradient(135deg, #1b6b5c, #0f4c41);
+      --hero-gradient: linear-gradient(145deg, #1b6b5c 0%, #10463c 100%);
+      --hero-accounts-gradient: linear-gradient(145deg, #1e4d6b 0%, #143247 100%);
+      --shadow-fab: 0 8px 22px rgba(27, 107, 92, 0.34);
+
+      /* Financial & Status Semantic Colors (Light) */
+      --md-income: #16803c;
+      --md-income-bg: #e6f6ec;
+      --md-expense: #c62828;
+      --md-expense-bg: #fdecec;
+      --md-transfer: #1565c0;
+      --md-transfer-bg: #e8f1fc;
+      --md-warning: #d97706;
+      --md-warning-bg: #fef3c7;
+      --md-warning-text: #92400e;
+      --md-warning-border: #f59e0b;
+      --md-danger: #b91c1c;
+      --md-danger-bg: #fee2e2;
+      --md-danger-border: #fca5a5;
+      --md-success-border: #86efac;
+      --md-success-text: #14532d;
+      --md-sms-tag-bg: #e0f2fe;
+      --md-sms-tag-text: #0369a1;
+      --md-unrev-tag-bg: #fef3c7;
+      --md-unrev-tag-text: #b45309;
+      --md-snackbar-bg: #1f2926;
+      --md-snackbar-text: #ffffff;
+
+      --radius-sm: 12px;
+      --radius-md: 18px;
+      --radius-lg: 24px;
+      --radius-pill: 999px;
+      --shadow-sm: 0 2px 8px rgba(16, 32, 27, 0.05);
+      --shadow-md: 0 6px 20px rgba(16, 32, 27, 0.1);
+      --font-stack: 'Vazirmatn', 'IRANSans', 'Tahoma', system-ui, -apple-system, sans-serif;
+    }
+
+    /* Dark Mode Semantic Defaults (Emerald Dark) */
+    [data-theme="dark"] {
+      --md-primary: #6fd8be;
+      --md-on-primary: #00382e;
+      --md-primary-container: #0d5245;
+      --md-on-primary-container: #b5f0df;
+      --md-secondary: #b1ccc2;
+      --md-secondary-container: #253c36;
+      --md-on-secondary-container: #d3eee5;
+      --md-outer-bg: #0b0f0e;
+      --md-surface: #111715;
+      --md-surface-card: #1a2220;
+      --md-surface-variant: #25302d;
+      --md-on-surface: #e4ece9;
+      --md-on-surface-variant: #9db0a9;
+      --md-outline: #33413d;
+      --md-topbar-bg: rgba(17, 23, 21, 0.9);
+      --brand-gradient: linear-gradient(135deg, #1b6b5c, #0c3d34);
+      --hero-gradient: linear-gradient(145deg, #135548 0%, #0a332b 100%);
+      --hero-accounts-gradient: linear-gradient(145deg, #1b3f59 0%, #0f2536 100%);
+      --shadow-fab: 0 8px 22px rgba(0, 0, 0, 0.45);
+
+      --md-income: #4ade80;
+      --md-income-bg: #133322;
+      --md-expense: #f87171;
+      --md-expense-bg: #3b191b;
+      --md-transfer: #60a5fa;
+      --md-transfer-bg: #162944;
+      --md-warning: #fbbf24;
+      --md-warning-bg: #33270d;
+      --md-warning-text: #fde68a;
+      --md-warning-border: #b45309;
+      --md-danger: #fca5a5;
+      --md-danger-bg: #3d181a;
+      --md-danger-border: #991b1b;
+      --md-success-border: #166534;
+      --md-success-text: #bbf7d0;
+      --md-sms-tag-bg: #123144;
+      --md-sms-tag-text: #7dd3fc;
+      --md-unrev-tag-bg: #3b2c0d;
+      --md-unrev-tag-text: #fcd34d;
+      --md-snackbar-bg: #e4ece9;
+      --md-snackbar-text: #111715;
+      --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.25);
+      --shadow-md: 0 6px 22px rgba(0, 0, 0, 0.36);
+    }
+
+    /* =========================================================
+       PALETTE 2: OCEAN (اقیانوسی مدرن)
+       ========================================================= */
+    [data-palette="ocean"][data-theme="light"] {
+      --md-primary: #1d4ed8;
+      --md-on-primary: #ffffff;
+      --md-primary-container: #dbeafe;
+      --md-on-primary-container: #1e3a8a;
+      --md-secondary: #475569;
+      --md-secondary-container: #e0e7ff;
+      --md-on-secondary-container: #1e1b4b;
+      --md-outer-bg: #dce3ef;
+      --md-surface: #f4f7fb;
+      --md-surface-card: #ffffff;
+      --md-surface-variant: #e5ebf5;
+      --md-on-surface: #141b2d;
+      --md-on-surface-variant: #526079;
+      --md-outline: #cfd9ea;
+      --md-topbar-bg: rgba(244, 247, 251, 0.9);
+      --brand-gradient: linear-gradient(135deg, #2563eb, #1e3a8a);
+      --hero-gradient: linear-gradient(145deg, #1d4ed8 0%, #1e3a8a 100%);
+      --hero-accounts-gradient: linear-gradient(145deg, #0369a1 0%, #0c4a6e 100%);
+      --shadow-fab: 0 8px 22px rgba(29, 78, 216, 0.34);
+    }
+
+    [data-palette="ocean"][data-theme="dark"] {
+      --md-primary: #60a5fa;
+      --md-on-primary: #0b2447;
+      --md-primary-container: #1e3a8a;
+      --md-on-primary-container: #dbeafe;
+      --md-secondary: #94a3b8;
+      --md-secondary-container: #1e2f4f;
+      --md-on-secondary-container: #dbeafe;
+      --md-outer-bg: #080c15;
+      --md-surface: #0f1523;
+      --md-surface-card: #172033;
+      --md-surface-variant: #222e47;
+      --md-on-surface: #e5ecf9;
+      --md-on-surface-variant: #9aa9c4;
+      --md-outline: #2f3e5c;
+      --md-topbar-bg: rgba(15, 21, 35, 0.9);
+      --brand-gradient: linear-gradient(135deg, #2563eb, #172554);
+      --hero-gradient: linear-gradient(145deg, #1e40af 0%, #172554 100%);
+      --hero-accounts-gradient: linear-gradient(145deg, #075985 0%, #082f49 100%);
+    }
+
+    /* =========================================================
+       PALETTE 3: VIOLET (بنفش سلطنتی)
+       ========================================================= */
+    [data-palette="violet"][data-theme="light"] {
+      --md-primary: #6d28d9;
+      --md-on-primary: #ffffff;
+      --md-primary-container: #ede9fe;
+      --md-on-primary-container: #3b0764;
+      --md-secondary: #645478;
+      --md-secondary-container: #f3e8ff;
+      --md-on-secondary-container: #4c1d95;
+      --md-outer-bg: #e4dff0;
+      --md-surface: #f7f5fc;
+      --md-surface-card: #ffffff;
+      --md-surface-variant: #ece7f6;
+      --md-on-surface: #1b1528;
+      --md-on-surface-variant: #615778;
+      --md-outline: #dad1ec;
+      --md-topbar-bg: rgba(247, 245, 252, 0.9);
+      --brand-gradient: linear-gradient(135deg, #7c3aed, #4c1d95);
+      --hero-gradient: linear-gradient(145deg, #7c3aed 0%, #4c1d95 100%);
+      --hero-accounts-gradient: linear-gradient(145deg, #4338ca 0%, #312e81 100%);
+      --shadow-fab: 0 8px 22px rgba(109, 40, 217, 0.34);
+    }
+
+    [data-palette="violet"][data-theme="dark"] {
+      --md-primary: #a78bfa;
+      --md-on-primary: #240a4d;
+      --md-primary-container: #4c1d95;
+      --md-on-primary-container: #ede9fe;
+      --md-secondary: #b9accf;
+      --md-secondary-container: #2e2249;
+      --md-on-secondary-container: #e9d5ff;
+      --md-outer-bg: #0d0a15;
+      --md-surface: #151121;
+      --md-surface-card: #1e1930;
+      --md-surface-variant: #2b2442;
+      --md-on-surface: #ece8f8;
+      --md-on-surface-variant: #a89dc2;
+      --md-outline: #3d345c;
+      --md-topbar-bg: rgba(21, 17, 33, 0.9);
+      --brand-gradient: linear-gradient(135deg, #6d28d9, #2e1065);
+      --hero-gradient: linear-gradient(145deg, #5b21b6 0%, #2e1065 100%);
+      --hero-accounts-gradient: linear-gradient(145deg, #3730a3 0%, #1e1b4b 100%);
+    }
+
+    /* =========================================================
+       PALETTE 4: SUNSET (غروب مرجانی)
+       ========================================================= */
+    [data-palette="sunset"][data-theme="light"] {
+      --md-primary: #c2410c;
+      --md-on-primary: #ffffff;
+      --md-primary-container: #ffedd5;
+      --md-on-primary-container: #7c2d12;
+      --md-secondary: #785a4a;
+      --md-secondary-container: #fef3c7;
+      --md-on-secondary-container: #78350f;
+      --md-outer-bg: #ede2da;
+      --md-surface: #faf6f2;
+      --md-surface-card: #ffffff;
+      --md-surface-variant: #f1e7df;
+      --md-on-surface: #231813;
+      --md-on-surface-variant: #6e594f;
+      --md-outline: #e3d3c6;
+      --md-topbar-bg: rgba(250, 246, 242, 0.9);
+      --brand-gradient: linear-gradient(135deg, #ea580c, #9a3412);
+      --hero-gradient: linear-gradient(145deg, #ea580c 0%, #9a3412 100%);
+      --hero-accounts-gradient: linear-gradient(145deg, #b45309 0%, #78350f 100%);
+      --shadow-fab: 0 8px 22px rgba(194, 65, 12, 0.34);
+    }
+
+    [data-palette="sunset"][data-theme="dark"] {
+      --md-primary: #fb923c;
+      --md-on-primary: #431407;
+      --md-primary-container: #7c2d12;
+      --md-on-primary-container: #ffedd5;
+      --md-secondary: #ccb0a0;
+      --md-secondary-container: #3e2618;
+      --md-on-secondary-container: #fed7aa;
+      --md-outer-bg: #130d0a;
+      --md-surface: #1c1410;
+      --md-surface-card: #261c17;
+      --md-surface-variant: #352821;
+      --md-on-surface: #f5ebe6;
+      --md-on-surface-variant: #bfa89b;
+      --md-outline: #4a382f;
+      --md-topbar-bg: rgba(28, 20, 16, 0.9);
+      --brand-gradient: linear-gradient(135deg, #c2410c, #5c1f0a);
+      --hero-gradient: linear-gradient(145deg, #9a3412 0%, #5c1f0a 100%);
+      --hero-accounts-gradient: linear-gradient(145deg, #854d0e 0%, #422006 100%);
+    }
+
+    /* =========================================================
+       PALETTE 5: ROSE (رزگلد لطیف)
+       ========================================================= */
+    [data-palette="rose"][data-theme="light"] {
+      --md-primary: #be185d;
+      --md-on-primary: #ffffff;
+      --md-primary-container: #fce7f3;
+      --md-on-primary-container: #831843;
+      --md-secondary: #755362;
+      --md-secondary-container: #ffe4e6;
+      --md-on-secondary-container: #881337;
+      --md-outer-bg: #eddde5;
+      --md-surface: #fbf5f8;
+      --md-surface-card: #ffffff;
+      --md-surface-variant: #f2e5ec;
+      --md-on-surface: #24141c;
+      --md-on-surface-variant: #705563;
+      --md-outline: #e4cfd9;
+      --md-topbar-bg: rgba(251, 245, 248, 0.9);
+      --brand-gradient: linear-gradient(135deg, #db2777, #831843);
+      --hero-gradient: linear-gradient(145deg, #db2777 0%, #831843 100%);
+      --hero-accounts-gradient: linear-gradient(145deg, #9d174d 0%, #500724 100%);
+      --shadow-fab: 0 8px 22px rgba(190, 24, 93, 0.34);
+    }
+
+    [data-palette="rose"][data-theme="dark"] {
+      --md-primary: #f472b6;
+      --md-on-primary: #500724;
+      --md-primary-container: #831843;
+      --md-on-primary-container: #fce7f3;
+      --md-secondary: #cfa9ba;
+      --md-secondary-container: #421d30;
+      --md-on-secondary-container: #fbcfe8;
+      --md-outer-bg: #130a0f;
+      --md-surface: #1c1117;
+      --md-surface-card: #271820;
+      --md-surface-variant: #38232e;
+      --md-on-surface: #f7eaf1;
+      --md-on-surface-variant: #c2a0b2;
+      --md-outline: #4d3140;
+      --md-topbar-bg: rgba(28, 17, 23, 0.9);
+      --brand-gradient: linear-gradient(135deg, #be185d, #500724);
+      --hero-gradient: linear-gradient(145deg, #9d174d 0%, #500724 100%);
+      --hero-accounts-gradient: linear-gradient(145deg, #701a4a 0%, #3b0726 100%);
+    }
+
+    /* =========================================================
+       PALETTE 6: GOLD (طلایی لوکس)
+       ========================================================= */
+    [data-palette="gold"][data-theme="light"] {
+      --md-primary: #a16207;
+      --md-on-primary: #ffffff;
+      --md-primary-container: #fef08a;
+      --md-on-primary-container: #422006;
+      --md-secondary: #685d4b;
+      --md-secondary-container: #f5ebd6;
+      --md-on-secondary-container: #443211;
+      --md-outer-bg: #e6e2d8;
+      --md-surface: #f9f7f2;
+      --md-surface-card: #ffffff;
+      --md-surface-variant: #eeeae0;
+      --md-on-surface: #1e1b16;
+      --md-on-surface-variant: #665e50;
+      --md-outline: #dcd5c5;
+      --md-topbar-bg: rgba(249, 247, 242, 0.9);
+      --brand-gradient: linear-gradient(135deg, #b45309, #292524);
+      --hero-gradient: linear-gradient(145deg, #292524 0%, #44403c 55%, #78551a 100%);
+      --hero-accounts-gradient: linear-gradient(145deg, #3f382e 0%, #1c1917 100%);
+      --shadow-fab: 0 8px 22px rgba(161, 98, 7, 0.34);
+    }
+
+    [data-palette="gold"][data-theme="dark"] {
+      --md-primary: #facc15;
+      --md-on-primary: #291d00;
+      --md-primary-container: #5c4308;
+      --md-on-primary-container: #fef08a;
+      --md-secondary: #c7bba4;
+      --md-secondary-container: #332b1c;
+      --md-on-secondary-container: #fde68a;
+      --md-outer-bg: #0b0a08;
+      --md-surface: #14120f;
+      --md-surface-card: #1e1b16;
+      --md-surface-variant: #2b2720;
+      --md-on-surface: #f2eee6;
+      --md-on-surface-variant: #b8ae9c;
+      --md-outline: #40392e;
+      --md-topbar-bg: rgba(20, 18, 15, 0.9);
+      --brand-gradient: linear-gradient(135deg, #ca8a04, #422006);
+      --hero-gradient: linear-gradient(145deg, #3b3019 0%, #1c1812 100%);
+      --hero-accounts-gradient: linear-gradient(145deg, #2e2923 0%, #141210 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--md-outer-bg);
+      color: var(--md-on-surface);
+      font-family: var(--font-stack);
+      font-size: 14px;
+      line-height: 1.6;
+      min-height: 100vh;
+      transition: background-color 0.25s ease, color 0.2s ease;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+    }
+
+    .num-ltr {
+      direction: ltr;
+      unicode-bidi: isolate;
+      display: inline-block;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      background: var(--md-surface);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.16);
+      overflow-x: hidden;
+      transition: background-color 0.25s ease;
+    }
+
+    /* Header */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: var(--md-topbar-bg);
+      backdrop-filter: blur(12px);
+      padding: calc(12px + env(safe-area-inset-top, 0px)) 14px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      border-bottom: 1px solid var(--md-outline);
+      transition: background-color 0.25s ease, border-color 0.25s ease;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-width: 0;
+    }
+
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 13px;
+      background: var(--brand-gradient);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .brand-text h1 {
+      margin: 0;
+      font-size: 15.5px;
+      font-weight: 800;
+      letter-spacing: -0.2px;
+      white-space: nowrap;
+    }
+
+    .brand-text span {
+      display: block;
+      font-size: 10.5px;
+      color: var(--md-on-surface-variant);
+      white-space: nowrap;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+
+    .icon-btn {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      border: 1px solid var(--md-outline);
+      background: var(--md-surface-card);
+      color: var(--md-on-surface);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .icon-btn:active {
+      transform: scale(0.93);
+    }
+
+    .icon-btn.palette-btn {
+      position: relative;
+      color: var(--md-primary);
+    }
+
+    .palette-dot-indicator {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--md-primary);
+      border: 1.5px solid var(--md-surface-card);
+    }
+
+    .sms-sim-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border: none;
+      background: var(--md-primary-container);
+      color: var(--md-on-primary-container);
+      padding: 8px 11px;
+      border-radius: var(--radius-pill);
+      font-family: inherit;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, filter 0.15s ease, background-color 0.25s ease;
+    }
+
+    .sms-sim-btn:active {
+      transform: scale(0.96);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 12px 16px calc(108px + env(safe-area-inset-bottom, 0px));
+    }
+
+    .view-section {
+      display: none;
+      animation: fadeSlide 0.22s ease;
+    }
+
+    .view-section.active {
+      display: block;
+    }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Month Switcher */
+    .month-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--md-surface-card);
+      border-radius: var(--radius-pill);
+      padding: 6px 8px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--md-outline);
+    }
+
+    .month-nav-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: none;
+      background: var(--md-surface);
+      color: var(--md-on-surface);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+
+    .month-nav-btn:active {
+      background: var(--md-surface-variant);
+    }
+
+    .month-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--md-on-surface);
+    }
+
+    /* Hero Summary Card */
+    .hero-card {
+      background: var(--hero-gradient);
+      color: #fff;
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s ease;
+    }
+
+    .hero-card.accounts-hero {
+      background: var(--hero-accounts-gradient);
+    }
+
+    .hero-card::after {
+      content: '';
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      top: -40px;
+      left: -30px;
+      pointer-events: none;
+    }
+
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      bottom: -45px;
+      right: -25px;
+      pointer-events: none;
+    }
+
+    .hero-subtitle {
+      font-size: 12px;
+      opacity: 0.9;
+      margin-bottom: 4px;
+    }
+
+    .hero-balance {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      letter-spacing: -0.3px;
+      direction: ltr;
+      unicode-bidi: isolate;
+      text-align: right;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .hero-stat-box {
+      background: rgba(255, 255, 255, 0.13);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      backdrop-filter: blur(4px);
+    }
+
+    .hero-stat-label {
+      font-size: 11px;
+      opacity: 0.92;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 4px;
+    }
+
+    .hero-stat-value {
+      font-size: 14px;
+      font-weight: 700;
+      direction: ltr;
+      unicode-bidi: isolate;
+      text-align: right;
+    }
+
+    /* Pending SMS Banner */
+    .pending-banner {
+      background: var(--md-warning-bg);
+      border: 1px solid var(--md-warning-border);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      margin-bottom: 14px;
+    }
+
+    .pending-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .pending-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--md-warning-text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pending-hint {
+      font-size: 11.5px;
+      color: var(--md-warning-text);
+    }
+
+    .pending-badge {
+      background: #d97706;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+    }
+
+    .pending-item {
+      background: var(--md-surface-card);
+      border-radius: var(--radius-sm);
+      padding: 10px;
+      margin-top: 8px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+      border: 1px solid var(--md-outline);
+    }
+
+    .pending-item-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      gap: 8px;
+    }
+
+    .pending-item-meta {
+      font-size: 12px;
+      color: var(--md-on-surface);
+      font-weight: 600;
+    }
+
+    .pending-item-meta small {
+      display: block;
+      font-size: 11px;
+      color: var(--md-on-surface-variant);
+      font-weight: 400;
+    }
+
+    .quick-cat-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .quick-chip {
+      border: 1px solid var(--md-outline);
+      background: var(--md-surface);
+      color: var(--md-on-surface);
+      border-radius: var(--radius-pill);
+      padding: 4px 10px;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .quick-chip:hover {
+      background: var(--md-primary-container);
+      color: var(--md-on-primary-container);
+      border-color: var(--md-primary);
+    }
+
+    .pending-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--md-outline);
+    }
+
+    .pending-action-btn {
+      border: 1px solid var(--md-outline);
+      background: var(--md-surface);
+      color: var(--md-on-surface);
+      border-radius: 9px;
+      padding: 5px 10px;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .pending-action-btn.edit-transfer {
+      background: var(--md-transfer-bg);
+      color: var(--md-transfer);
+      border-color: transparent;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .pending-action-btn.delete-sms {
+      background: var(--md-danger-bg);
+      color: var(--md-danger);
+      border-color: transparent;
+    }
+
+    /* Search Bar */
+    .search-box {
+      position: relative;
+      margin-bottom: 10px;
+    }
+
+    .search-input {
+      width: 100%;
+      border: 1px solid var(--md-outline);
+      border-radius: var(--radius-pill);
+      padding: 9px 38px 9px 34px;
+      font-family: inherit;
+      font-size: 12.5px;
+      background: var(--md-surface-card);
+      color: var(--md-on-surface);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .search-input:focus {
+      border-color: var(--md-primary);
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--md-on-surface-variant);
+      pointer-events: none;
+      display: flex;
+    }
+
+    .search-clear {
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: none;
+      background: var(--md-surface-variant);
+      color: var(--md-on-surface);
+      font-size: 12px;
+      cursor: pointer;
+      display: none;
+      place-items: center;
+    }
+
+    .search-clear.visible {
+      display: grid;
+    }
+
+    /* Section Header */
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 14px 0 10px;
+      gap: 8px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .filter-pills {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 10px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+
+    .filter-pill {
+      border: 1px solid var(--md-outline);
+      background: var(--md-surface-card);
+      color: var(--md-on-surface-variant);
+      border-radius: var(--radius-pill);
+      padding: 5px 12px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .filter-pill.active {
+      background: var(--md-primary);
+      color: var(--md-on-primary);
+      border-color: var(--md-primary);
+    }
+
+    /* Cards & Lists */
+    .card {
+      background: var(--md-surface-card);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--md-outline);
+      transition: background-color 0.25s ease, border-color 0.25s ease;
+    }
+
+    .tx-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .tx-item {
+      background: var(--md-surface-card);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      border: 1px solid var(--md-outline);
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      transition: transform 0.12s ease, background-color 0.25s ease;
+    }
+
+    .tx-item:active {
+      transform: scale(0.985);
+    }
+
+    .tx-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .tx-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .tx-title-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tx-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .tag-pill {
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 6px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .tag-sms {
+      background: var(--md-sms-tag-bg);
+      color: var(--md-sms-tag-text);
+    }
+
+    .tag-unreviewed {
+      background: var(--md-unrev-tag-bg);
+      color: var(--md-unrev-tag-text);
+    }
+
+    .tx-sub {
+      font-size: 11.5px;
+      color: var(--md-on-surface-variant);
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .tx-right {
+      text-align: left;
+      flex-shrink: 0;
+    }
+
+    .tx-amount {
+      font-size: 13.5px;
+      font-weight: 800;
+      direction: ltr;
+      unicode-bidi: isolate;
+    }
+
+    .tx-amount.income { color: var(--md-income); }
+    .tx-amount.expense { color: var(--md-expense); }
+    .tx-amount.transfer { color: var(--md-transfer); }
+
+    .tx-date {
+      font-size: 10.5px;
+      color: var(--md-on-surface-variant);
+      margin-top: 2px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 32px 16px;
+      color: var(--md-on-surface-variant);
+      background: var(--md-surface-card);
+      border-radius: var(--radius-md);
+      border: 1px dashed var(--md-outline);
+    }
+
+    /* =========================================================
+       THEME GALLERY & APPEARANCE PICKER STYLES
+       ========================================================= */
+    .mode-switcher {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      background: var(--md-surface);
+      padding: 4px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--md-outline);
+      margin-bottom: 14px;
+    }
+
+    .mode-btn {
+      border: none;
+      background: transparent;
+      color: var(--md-on-surface-variant);
+      padding: 8px 6px;
+      border-radius: 9px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: background-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .mode-btn.active {
+      background: var(--md-primary);
+      color: var(--md-on-primary);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .theme-card {
+      position: relative;
+      border: 2px solid var(--md-outline);
+      background: var(--md-surface);
+      border-radius: 16px;
+      padding: 9px;
+      text-align: right;
+      cursor: pointer;
+      font-family: inherit;
+      color: var(--md-on-surface);
+      transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      overflow: hidden;
+    }
+
+    .theme-card:active {
+      transform: scale(0.97);
+    }
+
+    .theme-card.active {
+      border-color: var(--md-primary);
+      background: var(--md-surface-card);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+    }
+
+    .theme-preview-banner {
+      height: 46px;
+      border-radius: 10px;
+      padding: 7px 9px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .theme-preview-banner::after {
+      content: '';
+      position: absolute;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.14);
+      top: -14px;
+      left: -10px;
+    }
+
+    .theme-mini-pill {
+      width: 34px;
+      height: 8px;
+      border-radius: 99px;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .theme-swatch-dots {
+      display: flex;
+      gap: 4px;
+    }
+
+    .theme-swatch-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 255, 255, 0.85);
+    }
+
+    .theme-card-title {
+      font-size: 12.5px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+    }
+
+    .theme-card-sub {
+      font-size: 10.5px;
+      color: var(--md-on-surface-variant);
+      margin-top: 2px;
+    }
+
+    .theme-check {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--md-primary);
+      color: var(--md-on-primary);
+      display: none;
+      place-items: center;
+      font-size: 11px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .theme-card.active .theme-check {
+      display: grid;
+    }
+
+    /* Budgets & Donut Chart */
+    .donut-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .donut-chart-box {
+      position: relative;
+      width: 124px;
+      height: 124px;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+    }
+
+    .donut-center {
+      position: absolute;
+      inset: 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .donut-center-label {
+      font-size: 9.5px;
+      color: var(--md-on-surface-variant);
+      line-height: 1.2;
+    }
+
+    .donut-center-val {
+      font-size: 11.5px;
+      font-weight: 800;
+      color: var(--md-on-surface);
+      direction: ltr;
+      unicode-bidi: isolate;
+      margin-top: 2px;
+      word-break: break-word;
+    }
+
+    .donut-center-unit {
+      font-size: 9px;
+      color: var(--md-on-surface-variant);
+    }
+
+    .donut-legend {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .legend-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      gap: 6px;
+    }
+
+    .legend-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .legend-name {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .budget-item {
+      background: var(--md-surface-card);
+      border-radius: var(--radius-md);
+      padding: 13px 14px;
+      margin-bottom: 10px;
+      border: 1px solid var(--md-outline);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .budget-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .budget-cat {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 13.5px;
+    }
+
+    .budget-edit-btn {
+      border: 1px solid var(--md-outline);
+      background: var(--md-surface);
+      color: var(--md-primary);
+      border-radius: var(--radius-pill);
+      padding: 4px 10px;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      background: var(--md-surface-variant);
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: var(--radius-pill);
+      transition: width 0.35s ease;
+    }
+
+    .progress-green { background: #16a34a; }
+    .progress-yellow { background: #eab308; }
+    .progress-red { background: #dc2626; }
+
+    .budget-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11.5px;
+      color: var(--md-on-surface-variant);
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    /* Accounts Cards */
+    .account-card {
+      background: var(--md-surface-card);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      margin-bottom: 10px;
+      border: 1px solid var(--md-outline);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .account-card.inactive {
+      opacity: 0.58;
+    }
+
+    .acc-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .acc-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: var(--md-secondary-container);
+      color: var(--md-on-secondary-container);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    .acc-name {
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .acc-bank {
+      font-size: 11.5px;
+      color: var(--md-on-surface-variant);
+    }
+
+    .acc-right {
+      text-align: left;
+      flex-shrink: 0;
+    }
+
+    .acc-balance {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--md-primary);
+      direction: ltr;
+      unicode-bidi: isolate;
+    }
+
+    .acc-balance.negative {
+      color: var(--md-expense);
+    }
+
+    .acc-actions {
+      display: flex;
+      gap: 6px;
+      justify-content: flex-end;
+      margin-top: 4px;
+    }
+
+    .mini-btn {
+      border: 1px solid var(--md-outline);
+      background: var(--md-surface);
+      color: var(--md-on-surface-variant);
+      padding: 4px 8px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Settings & Categories */
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--md-surface-variant);
+    }
+
+    .setting-row:last-child {
+      border-bottom: none;
+      padding-bottom: 2px;
+    }
+
+    .db-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .db-stat {
+      background: var(--md-surface);
+      border-radius: var(--radius-sm);
+      padding: 10px;
+      text-align: center;
+      border: 1px solid var(--md-outline);
+    }
+
+    .db-stat strong {
+      display: block;
+      font-size: 18px;
+      color: var(--md-primary);
+    }
+
+    .db-stat span {
+      font-size: 11px;
+      color: var(--md-on-surface-variant);
+    }
+
+    .cat-mgr-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .cat-mgr-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      background: var(--md-surface);
+      border: 1px solid var(--md-outline);
+      border-radius: var(--radius-sm);
+    }
+
+    .cat-mgr-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cat-mgr-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-size: 16px;
+    }
+
+    .emoji-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .emoji-btn {
+      height: 34px;
+      border-radius: 9px;
+      border: 1px solid var(--md-outline);
+      background: var(--md-surface);
+      font-size: 16px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
+    .emoji-btn.selected {
+      border-color: var(--md-primary);
+      background: var(--md-primary-container);
+    }
+
+    .color-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .color-swatch {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+    }
+
+    .color-swatch.selected {
+      border-color: var(--md-on-surface);
+      transform: scale(1.1);
+    }
+
+    /* Jalali Date Row */
+    .date-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr 1fr;
+      gap: 8px;
+    }
+
+    /* Buttons */
+    .btn {
+      border: none;
+      border-radius: var(--radius-pill);
+      padding: 11px 16px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: transform 0.14s ease, opacity 0.14s ease, background-color 0.2s ease;
+    }
+
+    .btn:active { transform: scale(0.97); }
+    .btn-primary { background: var(--md-primary); color: var(--md-on-primary); }
+    .btn-tonal { background: var(--md-secondary-container); color: var(--md-on-secondary-container); }
+    .btn-outline { background: transparent; border: 1px solid var(--md-outline); color: var(--md-on-surface); }
+    .btn-danger { background: var(--md-danger-bg); color: var(--md-danger); }
+    .btn-warning { background: var(--md-warning-bg); color: var(--md-warning-text); border: 1px solid var(--md-warning-border); }
+    .btn-block { width: 100%; }
+
+    /* FAB */
+    .fab {
+      position: fixed;
+      bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+      left: max(18px, calc(50% - 215px + 18px));
+      z-index: 30;
+      height: 54px;
+      padding: 0 18px;
+      border-radius: 18px;
+      border: none;
+      background: var(--md-primary);
+      color: var(--md-on-primary);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: var(--shadow-fab);
+      cursor: pointer;
+      transition: transform 0.15s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .fab:active { transform: scale(0.95); }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 430px;
+      height: calc(70px + env(safe-area-inset-bottom, 0px));
+      background: var(--md-surface-card);
+      border-top: 1px solid var(--md-outline);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      z-index: 25;
+      padding: 6px 4px calc(6px + env(safe-area-inset-bottom, 0px));
+      transition: background-color 0.25s ease, border-color 0.25s ease;
+    }
+
+    .nav-item {
+      border: none;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      color: var(--md-on-surface-variant);
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .nav-pill {
+      width: 54px;
+      height: 30px;
+      border-radius: var(--radius-pill);
+      display: grid;
+      place-items: center;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .nav-item.active {
+      color: var(--md-primary);
+      font-weight: 800;
+    }
+
+    .nav-item.active .nav-pill {
+      background: var(--md-primary-container);
+      color: var(--md-on-primary-container);
+    }
+
+    /* Modals & Bottom Sheets */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 16, 14, 0.58);
+      z-index: 50;
+      display: none;
+      justify-content: center;
+      align-items: flex-end;
+      backdrop-filter: blur(2px);
+    }
+
+    .overlay.open {
+      display: flex;
+    }
+
+    .overlay.top-layer {
+      z-index: 70;
+    }
+
+    .sheet {
+      width: 100%;
+      max-width: 430px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--md-surface-card);
+      color: var(--md-on-surface);
+      border-radius: 26px 26px 0 0;
+      padding: 12px 18px 24px;
+      animation: sheetUp 0.22s ease;
+    }
+
+    @keyframes sheetUp {
+      from { transform: translateY(40px); opacity: 0.5; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .sheet-handle {
+      width: 40px;
+      height: 4px;
+      background: var(--md-outline);
+      border-radius: 99px;
+      margin: 0 auto 12px;
+    }
+
+    .sheet-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .sheet-header h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .icon-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: var(--md-surface);
+      color: var(--md-on-surface);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+
+    /* Form Controls */
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 5px;
+      color: var(--md-on-surface-variant);
+    }
+
+    .input, .select, .textarea {
+      width: 100%;
+      border: 1.5px solid var(--md-outline);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      font-family: inherit;
+      font-size: 13.5px;
+      background: var(--md-surface);
+      color: var(--md-on-surface);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .input:focus, .select:focus, .textarea:focus {
+      border-color: var(--md-primary);
+      background: var(--md-surface-card);
+    }
+
+    .textarea {
+      min-height: 98px;
+      resize: vertical;
+      line-height: 1.7;
+    }
+
+    .segmented {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      background: var(--md-surface);
+      padding: 4px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--md-outline);
+      margin-bottom: 14px;
+    }
+
+    .segmented.two-col {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .seg-btn {
+      border: none;
+      background: transparent;
+      padding: 8px 4px;
+      border-radius: 9px;
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--md-on-surface-variant);
+      cursor: pointer;
+    }
+
+    .seg-btn.active-expense { background: var(--md-expense-bg); color: var(--md-expense); }
+    .seg-btn.active-income { background: var(--md-income-bg); color: var(--md-income); }
+    .seg-btn.active-transfer { background: var(--md-transfer-bg); color: var(--md-transfer); }
+
+    /* SMS Simulator Samples & Output */
+    .sample-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .sample-chip {
+      border: 1px solid var(--md-outline);
+      background: var(--md-surface);
+      color: var(--md-on-surface);
+      border-radius: var(--radius-pill);
+      padding: 6px 10px;
+      font-family: inherit;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .sample-chip.otp-chip {
+      border-color: var(--md-danger-border);
+      background: var(--md-danger-bg);
+      color: var(--md-danger);
+    }
+
+    .parser-result {
+      margin-top: 12px;
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      font-size: 12.5px;
+      display: none;
+    }
+
+    .parser-result.show { display: block; }
+    .parser-result.success { background: var(--md-income-bg); border: 1px solid var(--md-success-border); color: var(--md-success-text); }
+    .parser-result.danger { background: var(--md-danger-bg); border: 1px solid var(--md-danger-border); color: var(--md-danger); }
+    .parser-result.warning { background: var(--md-warning-bg); border: 1px solid var(--md-warning-border); color: var(--md-warning-text); }
+
+    .parser-steps {
+      margin: 8px 0 0;
+      padding: 0;
+      list-style: none;
+      font-size: 11.5px;
+    }
+
+    .parser-steps li {
+      margin-bottom: 5px;
+    }
+
+    .rial-convert-box {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--md-warning-border);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .confirm-box {
+      background: var(--md-surface);
+      border: 1px solid var(--md-outline);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      margin-bottom: 14px;
+      font-size: 12.5px;
+      color: var(--md-on-surface-variant);
+    }
+
+    /* Snackbar */
+    .snackbar {
+      position: fixed;
+      bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--md-snackbar-bg);
+      color: var(--md-snackbar-text);
+      padding: 10px 16px;
+      border-radius: var(--radius-pill);
+      font-size: 12.5px;
+      font-weight: 600;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s, transform 0.2s;
+      max-width: 390px;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+    }
+
+    .snackbar.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* PWA Install Banner & APK Toolkit */
+    .pwa-banner {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: var(--md-primary-container);
+      color: var(--md-on-primary-container);
+      border: 1px solid var(--md-primary);
+      border-radius: var(--radius-md);
+      padding: 11px 13px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .pwa-banner.visible {
+      display: flex;
+    }
+
+    .pwa-status-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 8px 0 12px;
+    }
+
+    .pwa-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 700;
+      background: var(--md-surface);
+      border: 1px solid var(--md-outline);
+      color: var(--md-on-surface);
+    }
+
+    .pwa-status-pill.ok {
+      background: var(--md-income-bg);
+      color: var(--md-income);
+      border-color: var(--md-success-border);
+    }
+
+    .pwa-status-pill.warn {
+      background: var(--md-warning-bg);
+      color: var(--md-warning-text);
+      border-color: var(--md-warning-border);
+    }
+
+    .pwa-files-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .pwa-file-btn {
+      border: 1px solid var(--md-outline);
+      background: var(--md-surface);
+      color: var(--md-on-surface);
+      border-radius: var(--radius-sm);
+      padding: 10px 8px;
+      font-family: inherit;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      transition: transform 0.14s ease, border-color 0.2s ease;
+    }
+
+    .pwa-file-btn:active {
+      transform: scale(0.97);
+    }
+
+    .pwa-file-btn:hover {
+      border-color: var(--md-primary);
+    }
+
+    .pwa-file-btn small {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--md-on-surface-variant);
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Top App Bar -->
+    <header class="top-bar">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/>
+            <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>جیب‌یار</h1>
+          <span>بودجه هوشمند و پیامک</span>
+        </div>
+      </div>
+      <div class="top-actions">
+        <!-- Quick Palette Picker Button -->
+        <button class="icon-btn palette-btn" id="openThemeModalBtn" type="button" title="انتخاب تم و رنگ‌بندی" aria-label="انتخاب تم">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/>
+            <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/>
+            <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/>
+            <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/>
+            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+          </svg>
+          <span class="palette-dot-indicator" aria-hidden="true"></span>
+        </button>
+
+        <!-- Quick Light / Dark Toggle -->
+        <button class="icon-btn" id="themeToggleBtn" type="button" title="تغییر حالت روشن و تاریک" aria-label="تغییر حالت نمایش">
+          <svg id="themeIconSun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" style="display:none;"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+          <svg id="themeIconMoon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+        </button>
+
+        <!-- SMS Simulator Button -->
+        <button class="sms-sim-btn" id="openSmsModalBtn" type="button">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            <path d="M8 10h8"/><path d="M8 14h4"/>
+          </svg>
+          شبیه‌ساز پیامک
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Views -->
+    <main class="main-content">
+      <!-- 1. Dashboard View -->
+      <section class="view-section active" id="view-dashboard">
+        <!-- Dynamic PWA Install Banner -->
+        <div class="pwa-banner" id="pwaInstallBanner">
+          <div style="min-width:0;">
+            <div style="font-size:12.5px; font-weight:800;">نصب اپلیکیشن جیب‌یار</div>
+            <div style="font-size:11px; opacity:0.88;">اجرای تمام‌صفحه و آفلاین روی صفحه اصلی گوشی</div>
+          </div>
+          <button class="btn btn-primary" id="pwaBannerInstallBtn" type="button" style="padding:7px 13px; font-size:11.5px; flex-shrink:0;">نصب</button>
+        </div>
+
+        <div class="month-bar">
+          <button class="month-nav-btn" id="prevMonthBtn" type="button" title="ماه قبل">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+          <div class="month-label" id="currentMonthLabel">—</div>
+          <button class="month-nav-btn" id="nextMonthBtn" type="button" title="ماه بعد">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+        </div>
+
+        <div class="hero-card">
+          <div class="hero-subtitle">مانده خالص این ماه (درآمد منهای هزینه)</div>
+          <div class="hero-balance num-ltr" id="heroNetBalance" style="display:block;">۰ تومان</div>
+          <div class="hero-stats">
+            <div class="hero-stat-box">
+              <div class="hero-stat-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#86efac" stroke-width="2.5"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+                مجموع درآمد
+              </div>
+              <div class="hero-stat-value" id="heroIncome">۰ تومان</div>
+            </div>
+            <div class="hero-stat-box">
+              <div class="hero-stat-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fca5a5" stroke-width="2.5"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
+                مجموع هزینه
+              </div>
+              <div class="hero-stat-value" id="heroExpense">۰ تومان</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pending SMS Categorization Banner -->
+        <div id="pendingSmsContainer"></div>
+
+        <div class="section-head">
+          <h2>تراکنش‌های ماه</h2>
+          <span id="txCountLabel" style="font-size:12px; color:var(--md-on-surface-variant)">۰ مورد</span>
+        </div>
+
+        <!-- Live Search -->
+        <div class="search-box">
+          <span class="search-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          </span>
+          <input class="search-input" id="txSearchInput" type="search" placeholder="جستجو در توضیحات، دسته‌بندی، حساب یا مبلغ..." autocomplete="off" />
+          <button class="search-clear" id="txSearchClear" type="button" aria-label="پاک کردن جستجو">✕</button>
+        </div>
+
+        <div class="filter-pills" id="txFilterPills">
+          <button class="filter-pill active" data-filter="ALL" type="button">همه</button>
+          <button class="filter-pill" data-filter="EXPENSE" type="button">هزینه‌ها</button>
+          <button class="filter-pill" data-filter="INCOME" type="button">درآمدها</button>
+          <button class="filter-pill" data-filter="TRANSFER" type="button">انتقال</button>
+          <button class="filter-pill" data-filter="SMS" type="button">پیامکی</button>
+        </div>
+
+        <div class="tx-list" id="txListContainer"></div>
+      </section>
+
+      <!-- 2. Budgets View -->
+      <section class="view-section" id="view-budgets">
+        <div class="month-bar">
+          <button class="month-nav-btn" id="prevMonthBtnBudget" type="button">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+          <div class="month-label" id="budgetMonthLabel">—</div>
+          <button class="month-nav-btn" id="nextMonthBtnBudget" type="button">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+        </div>
+
+        <div class="card">
+          <div style="font-weight:800; font-size:14px; margin-bottom:10px;">سهم هزینه‌های این ماه</div>
+          <div class="donut-wrap" id="expenseChartWrap"></div>
+        </div>
+
+        <div class="section-head">
+          <h2>سقف بودجه دسته‌ها</h2>
+          <button class="btn btn-tonal" id="openCatMgrFromBudgetBtn" type="button" style="padding:6px 12px; font-size:11.5px;">مدیریت دسته‌ها</button>
+        </div>
+
+        <div style="font-size:11px; color:var(--md-on-surface-variant); margin:-4px 0 10px;">
+          سبز &lt;۸۰٪ | زرد ۸۰-۹۹٪ | قرمز ۱۰۰٪+
+        </div>
+
+        <div id="budgetListContainer"></div>
+      </section>
+
+      <!-- 3. Accounts View -->
+      <section class="view-section" id="view-accounts">
+        <div class="hero-card accounts-hero">
+          <div class="hero-subtitle">مجموع موجودی کل حساب‌های فعال</div>
+          <div class="hero-balance num-ltr" id="totalAccountsBalance" style="margin-bottom:0; display:block;">۰ تومان</div>
+        </div>
+
+        <div class="section-head">
+          <h2>حساب‌ها و کارت‌های بانکی</h2>
+          <button class="btn btn-tonal" id="addAccountBtn" type="button" style="padding:6px 12px; font-size:12px;">+ حساب جدید</button>
+        </div>
+
+        <div id="accountsListContainer"></div>
+      </section>
+
+      <!-- 4. Settings View -->
+      <section class="view-section" id="view-settings">
+        <!-- Multi-Theme & Appearance Card -->
+        <div class="card">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
+            <div style="font-weight:800; font-size:14px;">تم و ظاهر برنامه</div>
+            <span id="themeStatusText" style="font-size:11px; color:var(--md-primary); font-weight:700;">—</span>
+          </div>
+          <div style="font-size:11.5px; color:var(--md-on-surface-variant); margin-bottom:10px;">
+            حالت نمایش و رنگ‌بندی دلخواه خود را انتخاب کنید
+          </div>
+
+          <div class="mode-switcher" id="settingsModeSwitcher">
+            <button type="button" class="mode-btn" data-mode="light">☀️ روشن</button>
+            <button type="button" class="mode-btn" data-mode="dark">🌙 تاریک</button>
+            <button type="button" class="mode-btn" data-mode="system">🖥️ خودکار</button>
+          </div>
+
+          <div class="theme-grid" id="settingsThemeGrid"></div>
+        </div>
+
+        <!-- PWA & APK Toolkit Card -->
+        <div class="card">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
+            <div>
+              <div style="font-weight:800; font-size:14px;">اپلیکیشن وب (PWA) و آماده‌سازی APK</div>
+              <div style="font-size:11.5px; color:var(--md-on-surface-variant);">نصب مستقیم روی گوشی یا دانلود فایل‌های لازم برای ساخت APK</div>
+            </div>
+            <span class="tag-pill" style="background:var(--md-primary-container); color:var(--md-on-primary-container); padding:3px 8px; font-size:10.5px;">PWA Ready</span>
+          </div>
+
+          <div class="pwa-status-row">
+            <span class="pwa-status-pill" id="pwaNetStatus">🌐 در حال بررسی شبکه...</span>
+            <span class="pwa-status-pill" id="pwaSwStatus">⚙️ سرویس‌ورکر: بررسی...</span>
+            <span class="pwa-status-pill" id="pwaDisplayStatus">📱 حالت مرورگر</span>
+          </div>
+
+          <button class="btn btn-primary btn-block" id="pwaInstallBtn" type="button" style="display:none; margin-bottom:10px;">
+            📲 نصب مستقیم اپلیکیشن جیب‌یار (PWA)
+          </button>
+
+          <div style="font-size:11.5px; color:var(--md-on-surface-variant); line-height:1.7;">
+            برای ساخت فایل <strong>APK</strong> (از طریق PWABuilder یا Capacitor)، این ۴ فایل را دانلود کرده و کنار فایل اصلی با نام <strong class="num-ltr">index.html</strong> قرار دهید:
+          </div>
+
+          <div class="pwa-files-grid">
+            <button class="pwa-file-btn" id="dlManifestBtn" type="button">
+              <span>📄 manifest.json</span>
+              <small>مشخصات اپلیکیشن</small>
+            </button>
+            <button class="pwa-file-btn" id="dlSwBtn" type="button">
+              <span>⚙️ sw.js</span>
+              <small>کَش و اجرای آفلاین</small>
+            </button>
+            <button class="pwa-file-btn" id="dlIcon192Btn" type="button">
+              <span>🖼️ icon-192.png</span>
+              <small>آیکون ۱۹۲×۱۹۲</small>
+            </button>
+            <button class="pwa-file-btn" id="dlIcon512Btn" type="button">
+              <span>🖼️ icon-512.png</span>
+              <small>آیکون ۵۱۲×۵۱۲ APK</small>
+            </button>
+          </div>
+        </div>
+
+        <!-- Database Stats -->
+        <div class="card">
+          <div style="font-weight:800; font-size:14px; margin-bottom:4px;">وضعیت پایگاه داده محلی (الگوی Room)</div>
+          <div style="font-size:11.5px; color:var(--md-on-surface-variant);">ذخیره‌سازی رابطه‌ای ۴ جدولی در localStorage</div>
+          <div class="db-grid" id="dbStatsGrid"></div>
+        </div>
+
+        <!-- Categories Management -->
+        <div class="card">
+          <div style="font-weight:800; font-size:14px; margin-bottom:6px;">شخصی‌سازی و دسته‌بندی‌ها</div>
+          <div class="setting-row">
+            <div>
+              <div style="font-weight:700; font-size:13px;">مدیریت دسته‌بندی‌ها</div>
+              <div style="font-size:11.5px; color:var(--md-on-surface-variant);">افزودن یا ویرایش نام، ایموجی، رنگ و نوع دسته‌ها</div>
+            </div>
+            <button class="btn btn-tonal" id="openCatMgrBtn" type="button" style="padding:7px 12px; font-size:12px;">مدیریت</button>
+          </div>
+        </div>
+
+        <!-- Backup & Export -->
+        <div class="card">
+          <div style="font-weight:800; font-size:14px; margin-bottom:6px;">خروجی و پشتیبان‌گیری</div>
+          <div class="setting-row">
+            <div>
+              <div style="font-weight:700; font-size:13px;">خروجی اکسل (CSV)</div>
+              <div style="font-size:11.5px; color:var(--md-on-surface-variant);">لیست کامل تراکنش‌ها با محافظت CSV Injection</div>
+            </div>
+            <button class="btn btn-tonal" id="exportCsvBtn" type="button" style="padding:7px 12px; font-size:12px;">دانلود CSV</button>
+          </div>
+          <div class="setting-row">
+            <div>
+              <div style="font-weight:700; font-size:13px;">پشتیبان کامل (JSON)</div>
+              <div style="font-size:11.5px; color:var(--md-on-surface-variant);">شامل هر ۴ جدول accounts، categories، transactions، budgets</div>
+            </div>
+            <button class="btn btn-tonal" id="exportJsonBtn" type="button" style="padding:7px 12px; font-size:12px;">دانلود JSON</button>
+          </div>
+          <div class="setting-row">
+            <div>
+              <div style="font-weight:700; font-size:13px;">بازیابی پشتیبان (JSON)</div>
+              <div style="font-size:11.5px; color:var(--md-on-surface-variant);">بارگذاری فایل JSON خروجی همراه با اعتبارسنجی ۴ جدول</div>
+            </div>
+            <button class="btn btn-primary" id="importJsonBtn" type="button" style="padding:7px 12px; font-size:12px;">بازیابی JSON</button>
+            <input type="file" id="importJsonInput" accept=".json,application/json" style="display:none;" />
+          </div>
+        </div>
+
+        <!-- Reset Demo -->
+        <div class="card">
+          <div style="font-weight:800; font-size:14px; margin-bottom:6px;">تنظیمات تست و دمو</div>
+          <div class="setting-row">
+            <div>
+              <div style="font-weight:700; font-size:13px;">بازگردانی داده‌های نمونه</div>
+              <div style="font-size:11.5px; color:var(--md-on-surface-variant);">پاک‌سازی تغییرات و بارگذاری مجدد حساب‌ها و تراکنش‌های اولیه</div>
+            </div>
+            <button class="btn btn-danger" id="resetDemoBtn" type="button" style="padding:7px 12px; font-size:12px;">Reset Demo</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FAB -->
+    <button class="fab" id="openTxModalBtn" type="button">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+      ثبت تراکنش
+    </button>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav" aria-label="ناوبری اصلی">
+      <button class="nav-item active" data-view="dashboard" type="button">
+        <span class="nav-pill">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </span>
+        خانه
+      </button>
+      <button class="nav-item" data-view="budgets" type="button">
+        <span class="nav-pill">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+        </span>
+        بودجه
+      </button>
+      <button class="nav-item" data-view="accounts" type="button">
+        <span class="nav-pill">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+        </span>
+        حساب‌ها
+      </button>
+      <button class="nav-item" data-view="settings" type="button">
+        <span class="nav-pill">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.01a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.01a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.01a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </span>
+        تنظیمات
+      </button>
+    </nav>
+  </div>
+
+  <!-- Modal 0: Quick Theme Picker Bottom Sheet -->
+  <div class="overlay" id="themeModal">
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h3>شخصی‌سازی تم و رنگ‌بندی</h3>
+        <button class="icon-close" data-close="themeModal" type="button">✕</button>
+      </div>
+
+      <div style="font-size:12px; font-weight:700; color:var(--md-on-surface-variant); margin-bottom:6px;">
+        حالت نمایش
+      </div>
+      <div class="mode-switcher" id="modalModeSwitcher">
+        <button type="button" class="mode-btn" data-mode="light">☀️ روشن</button>
+        <button type="button" class="mode-btn" data-mode="dark">🌙 تاریک</button>
+        <button type="button" class="mode-btn" data-mode="system">🖥️ خودکار</button>
+      </div>
+
+      <div style="font-size:12px; font-weight:700; color:var(--md-on-surface-variant); margin-bottom:8px;">
+        انتخاب پالت رنگی
+      </div>
+      <div class="theme-grid" id="modalThemeGrid"></div>
+    </div>
+  </div>
+
+  <!-- Modal 1: Manual Add / Edit Transaction -->
+  <div class="overlay" id="txModal">
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h3 id="txModalTitle">ثبت تراکنش جدید</h3>
+        <button class="icon-close" data-close="txModal" type="button">✕</button>
+      </div>
+      <form id="txForm">
+        <input type="hidden" id="txEditId" />
+        <div class="segmented" id="txTypeSegmented">
+          <button type="button" class="seg-btn active-expense" data-type="EXPENSE">هزینه</button>
+          <button type="button" class="seg-btn" data-type="INCOME">درآمد</button>
+          <button type="button" class="seg-btn" data-type="TRANSFER">انتقال</button>
+        </div>
+
+        <div class="form-group">
+          <label for="txAmount">مبلغ (تومان)</label>
+          <input class="input" id="txAmount" type="text" inputmode="numeric" placeholder="مثلاً ۲۵۰,۰۰۰" required />
+        </div>
+
+        <div class="form-group">
+          <label>تاریخ جلالی تراکنش</label>
+          <div class="date-grid">
+            <select class="select" id="txDateDay" aria-label="روز"></select>
+            <select class="select" id="txDateMonth" aria-label="ماه"></select>
+            <select class="select" id="txDateYear" aria-label="سال"></select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="txAccount" id="txAccountLabel">حساب / کارت</label>
+          <select class="select" id="txAccount" required></select>
+        </div>
+
+        <div class="form-group" id="txToAccountGroup" style="display:none;">
+          <label for="txToAccount">حساب مقصد (انتقال بین‌حسابی)</label>
+          <select class="select" id="txToAccount"></select>
+        </div>
+
+        <div class="form-group" id="txCategoryGroup">
+          <label for="txCategory">دسته‌بندی</label>
+          <select class="select" id="txCategory"></select>
+        </div>
+
+        <div class="form-group">
+          <label for="txNote">توضیحات</label>
+          <input class="input" id="txNote" type="text" placeholder="مثلاً خرید نان و لبنیات" />
+        </div>
+
+        <div style="display:flex; gap:8px; margin-top:16px;">
+          <button class="btn btn-primary btn-block" type="submit" id="txSaveBtn">ذخیره تراکنش</button>
+          <button class="btn btn-danger" type="button" id="txDeleteBtn" style="display:none;">حذف</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 2: Bank SMS Simulator -->
+  <div class="overlay" id="smsModal">
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h3>شبیه‌ساز دریافت پیامک بانکی</h3>
+        <button class="icon-close" data-close="smsModal" type="button">✕</button>
+      </div>
+
+      <div style="font-size:12px; color:var(--md-on-surface-variant); margin-bottom:8px;">
+        یک نمونه آماده انتخاب کنید یا متن پیامک بانکی را جای‌گذاری نمایید:
+      </div>
+
+      <div class="sample-chips" id="smsSampleButtons">
+        <button type="button" class="sample-chip" data-sample="mellat">بانک ملت (برداشت)</button>
+        <button type="button" class="sample-chip" data-sample="blu">بلو بانک (خرید)</button>
+        <button type="button" class="sample-chip" data-sample="melli">بانک ملی (ریال)</button>
+        <button type="button" class="sample-chip" data-sample="deposit">واریز با تاریخ خط‌تیره</button>
+        <button type="button" class="sample-chip" data-sample="rialNoUnit">ملت بدون واحد</button>
+        <button type="button" class="sample-chip otp-chip" data-sample="otp">پیامک رمز پویا (OTP)</button>
+      </div>
+
+      <div class="form-group">
+        <label for="smsInput">متن پیامک ورودی</label>
+        <textarea class="textarea" id="smsInput" placeholder="متن پیامک بانکی را اینجا وارد کنید..."></textarea>
+      </div>
+
+      <button class="btn btn-primary btn-block" id="runSmsParserBtn" type="button">
+        تحلیل ۳ لایه و ثبت هوشمند
+      </button>
+
+      <div class="parser-result" id="smsParserResult"></div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Budget Limit Editor -->
+  <div class="overlay" id="budgetModal">
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h3 id="budgetModalTitle">تنظیم سقف بودجه</h3>
+        <button class="icon-close" data-close="budgetModal" type="button">✕</button>
+      </div>
+      <form id="budgetForm">
+        <input type="hidden" id="budgetCategoryId" />
+        <div class="form-group">
+          <label for="budgetLimitInput">سقف بودجه ماهانه (تومان) — برای حذف سقف عدد ۰ وارد کنید</label>
+          <input class="input" id="budgetLimitInput" type="text" inputmode="numeric" placeholder="مثلاً ۵,۰۰۰,۰۰۰" required />
+        </div>
+        <button class="btn btn-primary btn-block" type="submit">ذخیره سقف بودجه</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 4: Add / Edit Account -->
+  <div class="overlay" id="accountModal">
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h3 id="accountModalTitle">افزودن حساب بانکی</h3>
+        <button class="icon-close" data-close="accountModal" type="button">✕</button>
+      </div>
+      <form id="accountForm">
+        <input type="hidden" id="accEditId" />
+        <div class="form-group">
+          <label for="accName">نام حساب</label>
+          <input class="input" id="accName" type="text" placeholder="مثلاً کارت اصلی حقوق" required />
+        </div>
+        <div class="form-group">
+          <label for="accBankName">نام بانک</label>
+          <input class="input" id="accBankName" type="text" placeholder="مثلاً بلو بانک، بانک ملت" required />
+        </div>
+        <div class="form-group">
+          <label for="accCardLast4">۴ رقم آخر کارت (اختیاری - صرفاً برای تطبیق پیامک)</label>
+          <input class="input" id="accCardLast4" type="text" inputmode="numeric" maxlength="4" placeholder="مثلاً 6219" />
+        </div>
+        <div class="form-group">
+          <label for="accBalance">موجودی فعلی (تومان)</label>
+          <input class="input num-ltr" id="accBalance" type="text" inputmode="text" placeholder="مثلاً ۱۰,۰۰۰,۰۰۰" style="display:block; text-align:right;" required />
+        </div>
+        <button class="btn btn-primary btn-block" type="submit">ذخیره حساب</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 5: Category Manager -->
+  <div class="overlay" id="categoryManagerModal">
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h3>مدیریت دسته‌بندی‌ها</h3>
+        <button class="icon-close" data-close="categoryManagerModal" type="button">✕</button>
+      </div>
+      <button class="btn btn-primary btn-block" id="addNewCategoryBtn" type="button" style="margin-bottom:14px;">+ افزودن دسته‌بندی جدید</button>
+      <div id="categoryManagerList"></div>
+    </div>
+  </div>
+
+  <!-- Modal 6: Add / Edit Category -->
+  <div class="overlay top-layer" id="categoryFormModal">
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h3 id="catFormModalTitle">افزودن دسته‌بندی</h3>
+        <button class="icon-close" data-close="categoryFormModal" type="button">✕</button>
+      </div>
+      <form id="categoryForm">
+        <input type="hidden" id="catEditId" />
+        <div class="segmented two-col" id="catTypeSegmented">
+          <button type="button" class="seg-btn active-expense" data-cat-type="EXPENSE">هزینه</button>
+          <button type="button" class="seg-btn" data-cat-type="INCOME">درآمد</button>
+        </div>
+
+        <div class="form-group">
+          <label for="catNameInput">نام دسته‌بندی</label>
+          <input class="input" id="catNameInput" type="text" placeholder="مثلاً کافه و رستوران" required />
+        </div>
+
+        <div class="form-group">
+          <label for="catIconInput">ایموجی</label>
+          <input class="input" id="catIconInput" type="text" maxlength="4" placeholder="مثلاً ☕" required />
+          <div class="emoji-grid" id="catEmojiPicker"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="catColorInput">رنگ دسته‌بندی</label>
+          <div class="color-row" id="catColorSwatches"></div>
+          <input id="catColorInput" type="color" value="#ea580c" style="margin-top:8px; width:48px; height:32px; border:none; background:transparent; cursor:pointer;" />
+        </div>
+
+        <button class="btn btn-primary btn-block" type="submit">ذخیره دسته‌بندی</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 7: In-App Confirmation Bottom Sheet -->
+  <div class="overlay top-layer" id="confirmModal">
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h3 id="confirmModalTitle">تایید عملیات</h3>
+        <button class="icon-close" data-close="confirmModal" type="button">✕</button>
+      </div>
+      <div class="confirm-box" id="confirmModalBody"></div>
+      <div style="display:flex; gap:8px;">
+        <button class="btn btn-outline btn-block" data-close="confirmModal" type="button">انصراف</button>
+        <button class="btn btn-danger btn-block" id="confirmModalOkBtn" type="button">تایید</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="snackbar" id="snackbar"></div>
+
+  <script>
+    (() => {
+      'use strict';
+
+      /* =========================================================
+         1. PURE JS JALALI CALENDAR & PERSIAN FORMATTING UTILITIES
+         ========================================================= */
+      const JALALI_MONTHS = [
+        'فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور',
+        'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'
+      ];
+
+      function gregorianToJalali(gy, gm, gd) {
+        const gdm = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+        let jy = gy <= 1600 ? 0 : 979;
+        gy -= gy <= 1600 ? 621 : 1600;
+        const gy2 = gm > 2 ? gy + 1 : gy;
+        let days = (365 * gy)
+          + Math.floor((gy2 + 3) / 4)
+          - Math.floor((gy2 + 99) / 100)
+          + Math.floor((gy2 + 399) / 400)
+          - 80 + gd + gdm[gm - 1];
+        jy += 33 * Math.floor(days / 12053);
+        days %= 12053;
+        jy += 4 * Math.floor(days / 1461);
+        days %= 1461;
+        if (days > 365) {
+          jy += Math.floor((days - 1) / 365);
+          days = (days - 1) % 365;
+        }
+        const jm = days < 186 ? 1 + Math.floor(days / 31) : 7 + Math.floor((days - 186) / 30);
+        const jd = 1 + (days < 186 ? days % 31 : (days - 186) % 30);
+        return { jy, jm, jd };
+      }
+
+      function jalaliToGregorian(jy, jm, jd) {
+        let gy = jy <= 979 ? 621 : 1600;
+        jy -= jy <= 979 ? 0 : 979;
+        let days = (365 * jy)
+          + (Math.floor(jy / 33) * 8)
+          + Math.floor(((jy % 33) + 3) / 4)
+          + 78 + jd
+          + (jm < 7 ? (jm - 1) * 31 : ((jm - 7) * 30) + 186);
+        gy += 400 * Math.floor(days / 146097);
+        days %= 146097;
+        if (days > 36524) {
+          gy += 100 * Math.floor(--days / 36524);
+          days %= 36524;
+          if (days >= 365) days++;
+        }
+        gy += 4 * Math.floor(days / 1461);
+        days %= 1461;
+        gy += Math.floor((days - 1) / 365);
+        if (days > 365) days = (days - 1) % 365;
+        let gd = days + 1;
+        const salA = [0, 31, ((gy % 4 === 0 && gy % 100 !== 0) || (gy % 400 === 0)) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        let gm = 1;
+        for (; gm <= 12; gm++) {
+          if (gd <= salA[gm]) break;
+          gd -= salA[gm];
+        }
+        return { gy, gm, gd };
+      }
+
+      function isJalaliLeapYear(jy) {
+        const g = jalaliToGregorian(jy, 12, 30);
+        const back = gregorianToJalali(g.gy, g.gm, g.gd);
+        return back.jy === jy && back.jm === 12 && back.jd === 30;
+      }
+
+      function getJalaliMonthDays(jy, jm) {
+        if (jm <= 6) return 31;
+        if (jm <= 11) return 30;
+        return isJalaliLeapYear(jy) ? 30 : 29;
+      }
+
+      function jalaliToTimestamp(jy, jm, jd, hours = 12, minutes = 0, seconds = 0) {
+        const maxD = getJalaliMonthDays(jy, jm);
+        const safeDay = Math.min(Math.max(1, jd), maxD);
+        const { gy, gm, gd } = jalaliToGregorian(jy, jm, safeDay);
+        return new Date(gy, gm - 1, gd, hours, minutes, seconds).getTime();
+      }
+
+      function dateToJalali(dateObj) {
+        return gregorianToJalali(dateObj.getFullYear(), dateObj.getMonth() + 1, dateObj.getDate());
+      }
+
+      function getJalaliYearMonth(dateObj) {
+        const { jy, jm } = dateToJalali(dateObj);
+        return jy * 100 + jm;
+      }
+
+      function formatJalaliMonthTitle(ym) {
+        const jy = Math.floor(ym / 100);
+        const jm = ym % 100;
+        return `${JALALI_MONTHS[jm - 1] || ''} ${toPersianDigits(jy)}`;
+      }
+
+      function shiftJalaliYearMonth(ym, delta) {
+        let jy = Math.floor(ym / 100);
+        let jm = ym % 100 + delta;
+        while (jm > 12) { jm -= 12; jy += 1; }
+        while (jm < 1) { jm += 12; jy -= 1; }
+        return jy * 100 + jm;
+      }
+
+      function formatJalaliDateShort(timestamp) {
+        const d = new Date(timestamp);
+        const { jy, jm, jd } = dateToJalali(d);
+        const hh = String(d.getHours()).padStart(2, '0');
+        const mm = String(d.getMinutes()).padStart(2, '0');
+        return `${toPersianDigits(jd)} ${JALALI_MONTHS[jm - 1]} ${toPersianDigits(jy)} • ${toPersianDigits(hh)}:${toPersianDigits(mm)}`;
+      }
+
+      function toPersianDigits(input) {
+        const fa = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        return String(input).replace(/\d/g, d => fa[Number(d)]);
+      }
+
+      function toEnglishDigits(input) {
+        return String(input)
+          .replace(/[۰-۹]/g, d => String(d.charCodeAt(0) - 1776))
+          .replace(/[٠-٩]/g, d => String(d.charCodeAt(0) - 1632));
+      }
+
+      function formatToman(amount, withUnit = true) {
+        const num = Math.round(Number(amount) || 0);
+        const abs = Math.abs(num);
+        const formatted = toPersianDigits(abs.toLocaleString('en-US'));
+        const sign = num < 0 ? '−' : '';
+        return withUnit ? `${sign}${formatted} تومان` : `${sign}${formatted}`;
+      }
+
+      function parseNumericInput(val) {
+        const cleaned = toEnglishDigits(val || '').replace(/[^\d]/g, '');
+        return cleaned ? parseInt(cleaned, 10) : 0;
+      }
+
+      function parseSignedNumericInput(val) {
+        const en = toEnglishDigits(val || '').trim();
+        const isNeg = /^[−\-]/.test(en);
+        const cleaned = en.replace(/[^\d]/g, '');
+        if (!cleaned) return 0;
+        const num = parseInt(cleaned, 10);
+        return isNeg ? -num : num;
+      }
+
+      function sanitizeColorHex(color, fallback = '#64748b') {
+        return /^#[0-9a-fA-F]{6}$/.test(String(color || '').trim()) ? String(color).trim() : fallback;
+      }
+
+      function escapeHtml(str) {
+        return String(str ?? '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function genId(prefix) {
+        return `${prefix}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 7)}`;
+      }
+
+      /* =========================================================
+         2. MULTI-THEME MANAGER (6 PALETTES × LIGHT / DARK / SYSTEM)
+         ========================================================= */
+      const THEME_MODE_KEY = 'jeebyar_v1_theme_mode';
+      const LEGACY_THEME_KEY = 'jeebyar_v1_theme';
+      const THEME_PALETTE_KEY = 'jeebyar_v1_theme_palette';
+
+      const THEME_PALETTES = [
+        {
+          id: 'emerald',
+          name: 'زمردی کلاسیک',
+          desc: 'آرام و متعادل',
+          gradient: 'linear-gradient(135deg, #1b6b5c, #0f4c41)',
+          dotPrimary: '#1b6b5c',
+          dotAccent: '#b5f0df'
+        },
+        {
+          id: 'ocean',
+          name: 'اقیانوسی مدرن',
+          desc: 'فینتک و شفاف',
+          gradient: 'linear-gradient(135deg, #1d4ed8, #1e3a8a)',
+          dotPrimary: '#2563eb',
+          dotAccent: '#93c5fd'
+        },
+        {
+          id: 'violet',
+          name: 'بنفش سلطنتی',
+          desc: 'پرانرژی و خلاق',
+          gradient: 'linear-gradient(135deg, #7c3aed, #4c1d95)',
+          dotPrimary: '#7c3aed',
+          dotAccent: '#ddd6fe'
+        },
+        {
+          id: 'sunset',
+          name: 'غروب مرجانی',
+          desc: 'گرم و صمیمی',
+          gradient: 'linear-gradient(135deg, #ea580c, #9a3412)',
+          dotPrimary: '#ea580c',
+          dotAccent: '#fed7aa'
+        },
+        {
+          id: 'rose',
+          name: 'رزگلد لطیف',
+          desc: 'مدرن و چشم‌نواز',
+          gradient: 'linear-gradient(135deg, #db2777, #831843)',
+          dotPrimary: '#db2777',
+          dotAccent: '#fbcfe8'
+        },
+        {
+          id: 'gold',
+          name: 'طلایی لوکس',
+          desc: 'کلاسیک و مدیریتی',
+          gradient: 'linear-gradient(135deg, #292524 0%, #574525 65%, #a16207 100%)',
+          dotPrimary: '#eab308',
+          dotAccent: '#fef08a'
+        }
+      ];
+
+      const ThemeManager = {
+        mode: 'system', // 'light' | 'dark' | 'system'
+        palette: 'emerald',
+        mediaQuery: window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null,
+
+        getEffectiveMode() {
+          if (this.mode === 'light' || this.mode === 'dark') return this.mode;
+          return (this.mediaQuery && this.mediaQuery.matches) ? 'dark' : 'light';
+        },
+
+        getPaletteInfo(id = this.palette) {
+          return THEME_PALETTES.find(p => p.id === id) || THEME_PALETTES[0];
+        },
+
+        renderGrids() {
+          const cardsHtml = THEME_PALETTES.map(p => `
+            <button type="button" class="theme-card ${p.id === this.palette ? 'active' : ''}" data-select-palette="${p.id}">
+              <div class="theme-preview-banner" style="background:${p.gradient};">
+                <div class="theme-mini-pill"></div>
+                <div class="theme-swatch-dots">
+                  <span class="theme-swatch-dot" style="background:${p.dotAccent};"></span>
+                  <span class="theme-swatch-dot" style="background:${p.dotPrimary};"></span>
+                </div>
+              </div>
+              <div class="theme-card-title">
+                <span>${p.name}</span>
+                <span class="theme-check">✓</span>
+              </div>
+              <div class="theme-card-sub">${p.desc}</div>
+            </button>
+          `).join('');
+
+          const settingsGrid = document.getElementById('settingsThemeGrid');
+          const modalGrid = document.getElementById('modalThemeGrid');
+          if (settingsGrid) settingsGrid.innerHTML = cardsHtml;
+          if (modalGrid) modalGrid.innerHTML = cardsHtml;
+        },
+
+        syncUI() {
+          const effective = this.getEffectiveMode();
+          const pInfo = this.getPaletteInfo();
+
+          const sun = document.getElementById('themeIconSun');
+          const moon = document.getElementById('themeIconMoon');
+          if (sun && moon) {
+            sun.style.display = effective === 'dark' ? 'block' : 'none';
+            moon.style.display = effective === 'dark' ? 'none' : 'block';
+          }
+
+          const modeLabels = { light: 'روشن', dark: 'تاریک', system: 'خودکار' };
+          const statusEl = document.getElementById('themeStatusText');
+          if (statusEl) {
+            statusEl.textContent = `${pInfo.name} • ${modeLabels[this.mode] || 'روشن'}`;
+          }
+
+          ['settingsModeSwitcher', 'modalModeSwitcher'].forEach(id => {
+            const container = document.getElementById(id);
+            if (!container) return;
+            container.querySelectorAll('[data-mode]').forEach(btn => {
+              btn.classList.toggle('active', btn.dataset.mode === this.mode);
+            });
+          });
+
+          ['settingsThemeGrid', 'modalThemeGrid'].forEach(id => {
+            const container = document.getElementById(id);
+            if (!container) return;
+            container.querySelectorAll('[data-select-palette]').forEach(card => {
+              card.classList.toggle('active', card.dataset.selectPalette === this.palette);
+            });
+          });
+        },
+
+        apply() {
+          const effective = this.getEffectiveMode();
+          const validPalette = this.getPaletteInfo(this.palette).id;
+          this.palette = validPalette;
+
+          document.documentElement.setAttribute('data-theme', effective);
+          document.documentElement.setAttribute('data-palette', validPalette);
+
+          // Sync Android PWA / Browser status bar color
+          const metaThemeColors = {
+            emerald: { light: '#1b6b5c', dark: '#111715' },
+            ocean:   { light: '#1d4ed8', dark: '#0f1523' },
+            violet:  { light: '#6d28d9', dark: '#151121' },
+            sunset:  { light: '#c2410c', dark: '#1c1410' },
+            rose:    { light: '#be185d', dark: '#1c1117' },
+            gold:    { light: '#292524', dark: '#14120f' }
+          };
+          const metaTag = document.getElementById('metaThemeColor');
+          if (metaTag && metaThemeColors[validPalette]) {
+            metaTag.setAttribute('content', metaThemeColors[validPalette][effective]);
+          }
+
+          try {
+            localStorage.setItem(THEME_MODE_KEY, this.mode);
+            localStorage.setItem(THEME_PALETTE_KEY, validPalette);
+          } catch {
+            // Ignore storage errors in restricted contexts
+          }
+
+          this.syncUI();
+        },
+
+        setMode(newMode, notify = false) {
+          if (!['light', 'dark', 'system'].includes(newMode)) return;
+          this.mode = newMode;
+          this.apply();
+          if (notify) {
+            const labels = { light: 'حالت روشن فعال شد', dark: 'حالت تاریک فعال شد', system: 'حالت خودکار (مطابق سیستم) فعال شد' };
+            showSnackbar(labels[newMode]);
+          }
+        },
+
+        setPalette(newPalette, notify = false) {
+          const info = this.getPaletteInfo(newPalette);
+          this.palette = info.id;
+          this.apply();
+          if (notify) {
+            showSnackbar(`تم «${info.name}» اعمال شد`);
+          }
+        },
+
+        toggleLightDark() {
+          const next = this.getEffectiveMode() === 'dark' ? 'light' : 'dark';
+          this.setMode(next, true);
+        },
+
+        init() {
+          try {
+            const savedMode = localStorage.getItem(THEME_MODE_KEY) || localStorage.getItem(LEGACY_THEME_KEY);
+            const savedPalette = localStorage.getItem(THEME_PALETTE_KEY);
+            if (['light', 'dark', 'system'].includes(savedMode)) {
+              this.mode = savedMode;
+            }
+            if (savedPalette && THEME_PALETTES.some(p => p.id === savedPalette)) {
+              this.palette = savedPalette;
+            }
+          } catch {
+            // Fallback to defaults
+          }
+
+          this.renderGrids();
+          this.apply();
+
+          if (this.mediaQuery && typeof this.mediaQuery.addEventListener === 'function') {
+            this.mediaQuery.addEventListener('change', () => {
+              if (this.mode === 'system') this.apply();
+            });
+          }
+        }
+      };
+
+      /* =========================================================
+         3. RELATIONAL LOCALSTORAGE DATABASE (4-TABLE ROOM SCHEMA)
+         ========================================================= */
+      const DB_KEYS = {
+        accounts: 'jeebyar_v1_accounts',
+        categories: 'jeebyar_v1_categories',
+        transactions: 'jeebyar_v1_transactions',
+        budgets: 'jeebyar_v1_budgets'
+      };
+
+      const DB = {
+        getTable(name) {
+          try {
+            const raw = localStorage.getItem(DB_KEYS[name]);
+            const parsed = raw ? JSON.parse(raw) : [];
+            return Array.isArray(parsed) ? parsed : [];
+          } catch {
+            return [];
+          }
+        },
+        setTable(name, rows) {
+          try {
+            localStorage.setItem(DB_KEYS[name], JSON.stringify(rows));
+          } catch {
+            showSnackbar('خطا در ذخیره‌سازی اطلاعات در حافظه مرورگر');
+          }
+        },
+        isInitialized() {
+          try {
+            return Boolean(localStorage.getItem(DB_KEYS.accounts) && localStorage.getItem(DB_KEYS.categories));
+          } catch {
+            return false;
+          }
+        },
+        seedDemoData() {
+          const now = Date.now();
+          const currentYM = getJalaliYearMonth(new Date(now));
+          const hour = 3600 * 1000;
+          const day = 24 * hour;
+
+          const accounts = [
+            { id: 'acc_cash', name: 'کیف پول نقد', bankName: 'نقدی', cardLast4: '', balance: 2450000, isActive: true },
+            { id: 'acc_blu', name: 'بلو بانک اصلی', bankName: 'بلو بانک', cardLast4: '6219', balance: 18450000, isActive: true },
+            { id: 'acc_mellat', name: 'حساب حقوق ملت', bankName: 'بانک ملت', cardLast4: '6104', balance: 34200000, isActive: true },
+            { id: 'acc_melli', name: 'پس‌انداز ملی', bankName: 'بانک ملی', cardLast4: '7391', balance: 9800000, isActive: true }
+          ];
+
+          const categories = [
+            { id: 'cat_food', name: 'خوراک', type: 'EXPENSE', icon: '🍽️', colorHex: '#ea580c' },
+            { id: 'cat_transport', name: 'حمل‌ونقل', type: 'EXPENSE', icon: '🚕', colorHex: '#0284c7' },
+            { id: 'cat_bills', name: 'قبوض', type: 'EXPENSE', icon: '⚡', colorHex: '#7c3aed' },
+            { id: 'cat_rent', name: 'اجاره', type: 'EXPENSE', icon: '🏠', colorHex: '#dc2626' },
+            { id: 'cat_shopping', name: 'خرید و شخصی', type: 'EXPENSE', icon: '🛍️', colorHex: '#db2777' },
+            { id: 'cat_uncat_exp', name: 'دسته‌بندی‌نشده', type: 'EXPENSE', icon: '❔', colorHex: '#64748b' },
+            { id: 'cat_salary', name: 'حقوق', type: 'INCOME', icon: '💼', colorHex: '#16a34a' },
+            { id: 'cat_other_inc', name: 'سایر درآمدها', type: 'INCOME', icon: '✨', colorHex: '#0d9488' },
+            { id: 'cat_uncat_inc', name: 'دسته‌بندی‌نشده', type: 'INCOME', icon: '❔', colorHex: '#64748b' }
+          ];
+
+          const makeSeedTx = (id, accountId, categoryId, amount, type, ts, source, smsHash, note, isReviewed) => ({
+            id,
+            accountId,
+            categoryId,
+            amount,
+            type,
+            timestamp: ts,
+            jalaliYearMonth: getJalaliYearMonth(new Date(ts)),
+            source,
+            smsHash,
+            note,
+            isReviewed
+          });
+
+          const transactions = [
+            makeSeedTx('tx_seed_1', 'acc_mellat', 'cat_salary', 32000000, 'INCOME', now - 4 * day, 'MANUAL', null, 'واریز حقوق ماهانه', true),
+            makeSeedTx('tx_seed_2', 'acc_mellat', 'cat_rent', 12000000, 'EXPENSE', now - 3 * day, 'MANUAL', null, 'اجاره آپارتمان', true),
+            makeSeedTx('tx_seed_3', 'acc_blu', 'cat_food', 3950000, 'EXPENSE', now - 2 * day, 'MANUAL', null, 'خرید مایحتاج هفتگی هایپرمارکت', true),
+            makeSeedTx('tx_seed_4', 'acc_cash', 'cat_transport', 1250000, 'EXPENSE', now - 1 * day, 'MANUAL', null, 'اسنپ و بنزین هفته', true),
+            makeSeedTx('tx_seed_5', 'acc_blu', 'cat_uncat_exp', 680000, 'EXPENSE', now - 3 * hour, 'SMS', 'seed_sms_hash_01', 'پیامک بلو بانک (*6219) - خرید کارتخوان', false)
+          ];
+
+          const budgets = [
+            { id: 'bdg_1', categoryId: 'cat_food', jalaliYearMonth: currentYM, limitAmount: 4500000 },
+            { id: 'bdg_2', categoryId: 'cat_transport', jalaliYearMonth: currentYM, limitAmount: 1200000 },
+            { id: 'bdg_3', categoryId: 'cat_bills', jalaliYearMonth: currentYM, limitAmount: 1500000 },
+            { id: 'bdg_4', categoryId: 'cat_rent', jalaliYearMonth: currentYM, limitAmount: 12000000 }
+          ];
+
+          this.setTable('accounts', accounts);
+          this.setTable('categories', categories);
+          this.setTable('transactions', transactions);
+          this.setTable('budgets', budgets);
+        },
+        validateBackupPayload(data) {
+          if (!data || typeof data !== 'object' || Array.isArray(data)) {
+            return { valid: false, error: 'فرمت فایل JSON معتبر نیست.' };
+          }
+          const requiredTables = ['accounts', 'categories', 'transactions', 'budgets'];
+          for (const tbl of requiredTables) {
+            if (!Array.isArray(data[tbl])) {
+              return { valid: false, error: `جدول «${tbl}» در فایل پشتیبان وجود ندارد یا آرایه نیست.` };
+            }
+          }
+          if (data.accounts.length === 0) {
+            return { valid: false, error: 'فایل پشتیبان باید حداقل یک حساب بانکی یا نقدی داشته باشد.' };
+          }
+          for (const a of data.accounts) {
+            if (!a || typeof a.id !== 'string' || typeof a.name !== 'string' || typeof a.balance !== 'number' || Number.isNaN(a.balance)) {
+              return { valid: false, error: 'ساختار رکوردهای جدول accounts نامعتبر است.' };
+            }
+          }
+          const hasActiveAccount = data.accounts.some(a => a.isActive !== false);
+          if (!hasActiveAccount) {
+            return { valid: false, error: 'حداقل یک حساب فعال باید در فایل پشتیبان وجود داشته باشد.' };
+          }
+          for (const c of data.categories) {
+            if (!c || typeof c.id !== 'string' || typeof c.name !== 'string' || !['EXPENSE', 'INCOME'].includes(c.type)) {
+              return { valid: false, error: 'ساختار رکوردهای جدول categories نامعتبر است.' };
+            }
+          }
+          for (const t of data.transactions) {
+            if (
+              !t ||
+              typeof t.id !== 'string' ||
+              typeof t.accountId !== 'string' ||
+              typeof t.amount !== 'number' ||
+              Number.isNaN(t.amount) ||
+              t.amount < 0 ||
+              !['EXPENSE', 'INCOME', 'TRANSFER'].includes(t.type) ||
+              typeof t.timestamp !== 'number' ||
+              typeof t.jalaliYearMonth !== 'number'
+            ) {
+              return { valid: false, error: 'ساختار رکوردهای جدول transactions نامعتبر است.' };
+            }
+          }
+          for (const b of data.budgets) {
+            if (
+              !b ||
+              typeof b.id !== 'string' ||
+              typeof b.categoryId !== 'string' ||
+              typeof b.jalaliYearMonth !== 'number' ||
+              typeof b.limitAmount !== 'number' ||
+              Number.isNaN(b.limitAmount)
+            ) {
+              return { valid: false, error: 'ساختار رکوردهای جدول budgets نامعتبر است.' };
+            }
+          }
+          return { valid: true };
+        }
+      };
+
+      /* =========================================================
+         4. BANK SMS PARSER ENGINE (HARDENED 3-LAYER ARCHITECTURE)
+         ========================================================= */
+      const SMS_SAMPLES = {
+        mellat: `بانک ملت\nبرداشت از حساب\nکارت: ****6104\nمبلغ: ۳۸۵,۰۰۰ تومان\nبابت خرید پایانه فروشگاهی\nمانده: ۳۳,۸۱۵,۰۰۰ تومان`,
+        blu: `بلوبانک\nبرداشت از حساب\nمبلغ 240,000 تومان از کارت 6219 بابت خرید کافه کسر شد.\nموجودی: 18,210,000 تومان`,
+        melli: `بانک ملی ایران\nبرداشت وجه\nکارت: 6037-****-****-7391\nمبلغ: ۵,۴۰۰,۰۰۰\nمانده: ۹۲,۶۰۰,۰۰۰ ریال`,
+        deposit: `بانک ملت\nواریز به حساب\nکارت: ****6104\nمبلغ: ۴,۵۰۰,۰۰۰ تومان\nبابت پرداخت فاکتور پروژه\nتاریخ: 1405-09-01 11:20\nمانده: ۳۸,۷۰۰,۰۰۰ تومان`,
+        rialNoUnit: `بانک ملت\nبرداشت از حساب\nکارت: ****6104\nمبلغ: 2,500,000\nبابت خرید فروشگاه\nمانده: 31,700,000`,
+        otp: `بانک ملت\nرمز پویا (دوم) کارت ****6104:\n482916\nمبلغ: 1,250,000 ریال\nکد یکبار مصرف محرمانه است و هرگز در اختیار دیگران قرار ندهید.`
+      };
+
+      const BankSmsParser = {
+        OTP_KEYWORDS: [
+          'رمز پویا', 'رمز دوم', 'رمز یکبار مصرف', 'کد تایید', 'کد تأیید',
+          'کد محرمانه', 'یکبار مصرف', 'یک بار مصرف', 'کد ورود',
+          'رمز', 'پویا', 'ورود', 'پین', 'otp', 'pin'
+        ],
+        RIAL_BANKS: ['ملی', 'ملت', 'صادرات', 'تجارت', 'سپه'],
+
+        computeHash(str) {
+          let hash = 0x811c9dc5;
+          for (let i = 0; i < str.length; i++) {
+            hash ^= str.charCodeAt(i);
+            hash = Math.imul(hash, 0x01000193);
+          }
+          return 'sms_' + (hash >>> 0).toString(16).padStart(8, '0');
+        },
+
+        escapeRegex(str) {
+          return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        },
+
+        checkOtpGuard(normalizedText) {
+          const lower = normalizedText.toLowerCase();
+          const boundaryBefore = '(?:^|[^\\u0600-\\u06FF\\uFB50-\\uFDFF\\uFE70-\\uFEFFa-zA-Z0-9_])';
+          const boundaryAfter = '(?=$|[^\\u0600-\\u06FF\\uFB50-\\uFDFF\\uFE70-\\uFEFFa-zA-Z0-9_])';
+
+          for (const kw of this.OTP_KEYWORDS) {
+            const pattern = this.escapeRegex(kw).replace(/\s+/g, '\\s+');
+            const rx = new RegExp(boundaryBefore + pattern + boundaryAfter, 'i');
+            if (rx.test(lower)) {
+              return { blocked: true, keyword: kw };
+            }
+          }
+          return { blocked: false };
+        },
+
+        normalize(rawText) {
+          return toEnglishDigits(rawText || '')
+            .replace(/ي/g, 'ی')
+            .replace(/ك/g, 'ک')
+            .replace(/‌/g, ' ')
+            .replace(/[٬،]/g, ',')
+            .replace(/\r/g, '\n')
+            .replace(/[ \t]+/g, ' ')
+            .trim();
+        },
+
+        extractDate(normalized) {
+          let jy = null;
+          let jm = null;
+          let jd = null;
+          let rawDateMatch = null;
+
+          const rx4 = /(?:^|[^\d\-])(1[34]\d{2})[\/\-](0?[1-9]|1[0-2])[\/\-](0?[1-9]|[12]\d|3[01])(?=$|[^\d\-])/;
+          const m4 = normalized.match(rx4);
+          if (m4) {
+            jy = parseInt(m4[1], 10);
+            jm = parseInt(m4[2], 10);
+            jd = parseInt(m4[3], 10);
+            rawDateMatch = `${m4[1]}/${m4[2]}/${m4[3]}`;
+          } else {
+            const rx2 = /(?:^|[^\d\-])(0\d|1\d|9\d)[\/\-](0?[1-9]|1[0-2])[\/\-](0?[1-9]|[12]\d|3[01])(?=$|[^\d\-])/;
+            const m2 = normalized.match(rx2);
+            if (m2) {
+              const yy = parseInt(m2[1], 10);
+              jy = yy >= 80 ? 1300 + yy : 1400 + yy;
+              jm = parseInt(m2[2], 10);
+              jd = parseInt(m2[3], 10);
+              rawDateMatch = `${jy}/${m2[2]}/${m2[3]}`;
+            }
+          }
+
+          const now = new Date();
+          if (jy && jm && jd && jd <= getJalaliMonthDays(jy, jm)) {
+            let hh = now.getHours();
+            let mm = now.getMinutes();
+            let ss = 0;
+            const tm = normalized.match(/(?:^|[^\d:])([01]?\d|2[0-3]):([0-5]\d)(?::([0-5]\d))?(?=$|[^\d:])/);
+            if (tm) {
+              hh = parseInt(tm[1], 10);
+              mm = parseInt(tm[2], 10);
+              ss = tm[3] ? parseInt(tm[3], 10) : 0;
+            }
+            const timestamp = jalaliToTimestamp(jy, jm, jd, hh, mm, ss);
+            return {
+              timestamp,
+              jalaliYearMonth: jy * 100 + jm,
+              foundInSms: true,
+              label: `${toPersianDigits(jd)} ${JALALI_MONTHS[jm - 1]} ${toPersianDigits(jy)}`,
+              rawDateMatch
+            };
+          }
+
+          const todayJ = dateToJalali(now);
+          return {
+            timestamp: now.getTime(),
+            jalaliYearMonth: todayJ.jy * 100 + todayJ.jm,
+            foundInSms: false,
+            label: `${toPersianDigits(todayJ.jd)} ${JALALI_MONTHS[todayJ.jm - 1]} ${toPersianDigits(todayJ.jy)} (امروز)`,
+            rawDateMatch: null
+          };
+        },
+
+        detectTransactionType(normalized, textWithoutBalance) {
+          const lines = textWithoutBalance.split('\n').map(l => l.trim()).filter(Boolean);
+          const headerText = lines.slice(0, 2).join(' ');
+          const cleanBody = textWithoutBalance.replace(/بابت\s+[^\n,.]*/g, ' ');
+
+          const incomePrimaryRx = /(واریز|افزایش موجودی|افزایش|بستانکار|دریافت وجه|سود سپرده|برگشت وجه|استرداد)/;
+          const expensePrimaryRx = /(برداشت|کسر|خرید|بدهکار|انتقال وجه|انتقال از|کارمزد|پرداخت قبض|پرداخت قسط)/;
+          const expenseSecondaryRx = /(برداشت|کسر|خرید|پرداخت|انتقال وجه|بدهکار|کارمزد)/;
+
+          const signedIncomeRx = /(?:(?:^|\n)\s*|مبلغ\s*[:：]?\s*)\+\s*[0-9][0-9,]*/;
+          const signedExpenseRx = /(?:(?:^|\n)\s*|مبلغ\s*[:：]?\s*)-\s*[0-9][0-9,]*/;
+
+          const headerHasIncome = incomePrimaryRx.test(headerText);
+          const headerHasExpense = expensePrimaryRx.test(headerText);
+          if (headerHasIncome && !headerHasExpense) return 'INCOME';
+          if (headerHasExpense && !headerHasIncome) return 'EXPENSE';
+
+          if (signedIncomeRx.test(textWithoutBalance) && !signedExpenseRx.test(textWithoutBalance)) return 'INCOME';
+          if (signedExpenseRx.test(textWithoutBalance) && !signedIncomeRx.test(textWithoutBalance)) return 'EXPENSE';
+
+          const incMatch = cleanBody.match(/(واریز|افزایش|بستانکار|سود|حقوق|دریافت)/);
+          const expMatch = cleanBody.match(expenseSecondaryRx);
+
+          if (incMatch && !expMatch) return 'INCOME';
+          if (expMatch && !incMatch) return 'EXPENSE';
+          if (incMatch && expMatch) {
+            return incMatch.index < expMatch.index ? 'INCOME' : 'EXPENSE';
+          }
+
+          return 'EXPENSE';
+        },
+
+        parseAndSave(rawText) {
+          const steps = [];
+          if (!rawText || !rawText.trim()) {
+            return { status: 'error', title: 'متن پیامک خالی است', steps: ['لطفاً متن پیامک را وارد کنید.'] };
+          }
+
+          const normalized = this.normalize(rawText);
+          const otpCheck = this.checkOtpGuard(normalized);
+          if (otpCheck.blocked) {
+            steps.push(`❌ لایه ۱ (OTP Guard): کلیدواژه حساس مستقل «${otpCheck.keyword}» شناسایی شد.`);
+            steps.push('🛡️ پیامک بلافاصله مسدود شد و در حافظه ذخیره نگردید.');
+            return {
+              status: 'otp_blocked',
+              title: 'هشدار امنیتی: پیامک رمز پویا مسدود شد!',
+              steps
+            };
+          }
+          steps.push('✅ لایه ۱ (OTP Guard): پیامک فاقد کد امنیتی یا رمز یکبار مصرف است.');
+          steps.push('✅ لایه ۲ (نرمال‌سازی): اعداد فارسی/عربی و کاراکترهای ي/ك یکسان‌سازی شدند.');
+
+          const smsHash = this.computeHash(normalized.replace(/\s+/g, ' '));
+          const existingTx = DB.getTable('transactions').find(t => t.smsHash === smsHash);
+          if (existingTx) {
+            steps.push(`⚠️ لایه ۳ (ضدتکرار): هش ${smsHash} قبلاً در دیتابیس ثبت شده است.`);
+            return {
+              status: 'duplicate',
+              title: 'تراکنش تکراری شناسایی و مسدود شد',
+              steps
+            };
+          }
+
+          const textWithoutBalance = normalized.replace(/(مانده|موجودی|باقیمانده)[^\n]*/g, '');
+          const type = this.detectTransactionType(normalized, textWithoutBalance);
+          steps.push(`🔎 تشخیص نوع تراکنش: ${type === 'INCOME' ? 'واریز (درآمد)' : 'برداشت (هزینه)'}`);
+
+          const parsedDate = this.extractDate(normalized);
+          steps.push(parsedDate.foundInSms
+            ? `📅 تاریخ استخراج‌شده از پیامک: ${parsedDate.label}`
+            : `📅 تاریخ در پیامک یافت نشد؛ تاریخ امروز (${parsedDate.label}) ثبت شد.`
+          );
+
+          const textForAmount = textWithoutBalance
+            .replace(/(?:1[34]\d{2}|[019]\d)[\/\-](?:0?[1-9]|1[0-2])[\/\-](?:0?[1-9]|[12]\d|3[01])/g, ' ')
+            .replace(/(?:[01]?\d|2[0-3]):[0-5]\d(?::[0-5]\d)?/g, ' ');
+
+          let amountMatch = textForAmount.match(/(?:مبلغ|برداشت|واریز|خرید|پرداخت)\s*[:：]?\s*[+-]?\s*([0-9][0-9,]{2,})/);
+          if (!amountMatch) {
+            amountMatch = textForAmount.match(/(?:^|\n)\s*[+-]\s*([0-9][0-9,]{2,})/);
+          }
+          if (!amountMatch) {
+            amountMatch = textForAmount.match(/([0-9]{1,3}(?:,[0-9]{3})+|[0-9]{4,})\s*(?:ریال|تومان|تومن|irr)/i);
+          }
+          if (!amountMatch) {
+            const cleanedForNum = textForAmount.replace(/(?:کارت|حساب|شبا)\s*[:：]?\s*[0-9*-]+/g, ' ');
+            amountMatch = cleanedForNum.match(/\b([0-9]{1,3}(?:,[0-9]{3})+|[0-9]{4,})\b/);
+          }
+
+          if (!amountMatch) {
+            steps.push('❌ لایه ۳ (استخراج Regex): الگوی مبلغ معتبر در متن پیامک یافت نشد.');
+            return { status: 'error', title: 'مبلغ تراکنش قابل تشخیص نیست', steps };
+          }
+
+          const rawNumber = parseInt(amountMatch[1].replace(/,/g, ''), 10);
+          const hasTomanInAmountLine = /تومان|تومن/i.test(textWithoutBalance);
+          const hasRialInFullText = /ریال|irr/i.test(normalized);
+          const hasTomanInFullText = /تومان|تومن/i.test(normalized);
+          const isRial = hasRialInFullText && !hasTomanInAmountLine;
+
+          let rialBankWarning = null;
+          let amountToman = rawNumber;
+
+          if (isRial) {
+            amountToman = Math.round(rawNumber / 10);
+            steps.push(`🔄 تبدیل واحد ریال به تومان (تشخیص از کل متن): ${toPersianDigits(rawNumber.toLocaleString('en-US'))} ریال ← ${formatToman(amountToman)}`);
+          } else if (!hasRialInFullText && !hasTomanInFullText) {
+            const matchedRialBank = this.RIAL_BANKS.find(b => normalized.includes(b));
+            if (matchedRialBank) {
+              rialBankWarning = {
+                bankName: matchedRialBank,
+                convertedAmount: Math.round(rawNumber / 10)
+              };
+              steps.push(`💰 مبلغ استخراج‌شده: ${formatToman(amountToman)} (واحد در پیامک ذکر نشده است)`);
+              steps.push(`⚠️ هشدار بانک ریالی: نام «بانک ${matchedRialBank}» در پیامک وجود دارد که معمولاً ریالی است؛ در صورت ریالی بودن از دکمه تبدیل زیر استفاده کنید.`);
+            } else {
+              steps.push(`💰 مبلغ استخراج‌شده: ${formatToman(amountToman)}`);
+            }
+          } else {
+            steps.push(`💰 مبلغ استخراج‌شده: ${formatToman(amountToman)}`);
+          }
+
+          let cardLast4 = '';
+          const cardPatterns = [
+            /(?:\*{2,}|-\*{2,}-|کارت\s*[:：]?\s*(?:[0-9]{4}[-\s]*){0,3})([0-9]{4})\b/,
+            /کارت\s*[:：]?\s*([0-9]{4})\b/,
+            /\*([0-9]{4})\b/
+          ];
+          for (const rx of cardPatterns) {
+            const m = normalized.match(rx);
+            if (m && m[1]) { cardLast4 = m[1]; break; }
+          }
+
+          const accounts = DB.getTable('accounts');
+          const isCashAccount = a => a.id === 'acc_cash' || (a.bankName || '').trim() === 'نقدی';
+          const bankAccounts = accounts.filter(a => !isCashAccount(a));
+          const activeBankAccounts = bankAccounts.filter(a => a.isActive);
+
+          let matchedAccount = null;
+          let matchMethod = '';
+
+          if (cardLast4) {
+            matchedAccount = activeBankAccounts.find(a => a.cardLast4 === cardLast4)
+              || bankAccounts.find(a => a.cardLast4 === cardLast4);
+            if (matchedAccount) matchMethod = 'card';
+          }
+          if (!matchedAccount) {
+            matchedAccount = activeBankAccounts.find(a => {
+              const b = (a.bankName || '').trim();
+              return b && (normalized.includes(b) || normalized.includes(b.replace(/\s+/g, '')));
+            });
+            if (matchedAccount) matchMethod = 'bank';
+          }
+          if (!matchedAccount) {
+            matchedAccount = activeBankAccounts[0] || null;
+            if (matchedAccount) matchMethod = 'fallback';
+          }
+
+          if (!matchedAccount) {
+            steps.push('❌ هیچ حساب بانکی فعالی برای ثبت تراکنش پیامکی یافت نشد (پیامک روی کیف پول نقد ثبت نمی‌شود).');
+            return {
+              status: 'error',
+              title: 'حساب بانکی فعالی یافت نشد',
+              steps
+            };
+          }
+
+          if (matchMethod === 'card') {
+            steps.push(`💳 کارت *${toPersianDigits(cardLast4)} با حساب «${matchedAccount.name}» تطبیق داده شد.`);
+          } else if (matchMethod === 'bank') {
+            steps.push(`💳 تطبیق با نام بانک انجام شد: حساب «${matchedAccount.name}» انتخاب گردید.`);
+          } else {
+            steps.push(`⚠️ شماره کارت یا نام بانک تطبیق نیافت؛ تراکنش روی اولین حساب بانکی فعال («${matchedAccount.name}») ثبت شد.`);
+          }
+
+          const newTx = {
+            id: genId('tx'),
+            accountId: matchedAccount.id,
+            categoryId: type === 'INCOME' ? 'cat_uncat_inc' : 'cat_uncat_exp',
+            amount: amountToman,
+            type,
+            timestamp: parsedDate.timestamp,
+            jalaliYearMonth: parsedDate.jalaliYearMonth,
+            source: 'SMS',
+            smsHash,
+            note: `پیامک ${matchedAccount.bankName}${cardLast4 ? ` (*${cardLast4})` : ''}`,
+            isReviewed: false
+          };
+
+          saveTransactionRecord(newTx, null);
+          steps.push(`✅ لایه ۳ (ذخیره و ضدتکرار): با هش ${smsHash} در ماه ${formatJalaliMonthTitle(parsedDate.jalaliYearMonth)} و وضعیت در انتظار بررسی ثبت شد.`);
+
+          return {
+            status: 'success',
+            title: `${type === 'INCOME' ? 'واریز' : 'برداشت'} ${formatToman(amountToman)} با موفقیت ثبت شد`,
+            steps,
+            tx: newTx,
+            rialBankWarning
+          };
+        }
+      };
+
+      /* =========================================================
+         5. APPLICATION STATE & BUSINESS LOGIC
+         ========================================================= */
+      const state = {
+        activeView: 'dashboard',
+        selectedYM: getJalaliYearMonth(new Date()),
+        txFilter: 'ALL',
+        searchQuery: '',
+        txModalType: 'EXPENSE',
+        catModalType: 'EXPENSE',
+        pendingConfirmAction: null
+      };
+
+      const PRESET_EMOJIS = ['🍽️', '🚕', '⚡', '🏠', '🛍️', '☕', '💊', '🎓', '🎮', '✈️', '🎁', '📱', '💼', '💰', '📈', '✨'];
+      const PRESET_COLORS = ['#ea580c', '#0284c7', '#7c3aed', '#dc2626', '#db2777', '#16a34a', '#0d9488', '#ca8a04', '#4f46e5', '#475569'];
+
+      function applyAccountDelta(accounts, tx, multiplier) {
+        const src = accounts.find(a => a.id === tx.accountId);
+        if (src) {
+          if (tx.type === 'INCOME') src.balance += tx.amount * multiplier;
+          else if (tx.type === 'EXPENSE') src.balance -= tx.amount * multiplier;
+          else if (tx.type === 'TRANSFER') src.balance -= tx.amount * multiplier;
+        }
+        if (tx.type === 'TRANSFER' && tx.toAccountId) {
+          const dst = accounts.find(a => a.id === tx.toAccountId);
+          if (dst) dst.balance += tx.amount * multiplier;
+        }
+      }
+
+      function saveTransactionRecord(txData, editingId) {
+        const transactions = DB.getTable('transactions');
+        const accounts = DB.getTable('accounts');
+
+        if (editingId) {
+          const idx = transactions.findIndex(t => t.id === editingId);
+          if (idx !== -1) {
+            applyAccountDelta(accounts, transactions[idx], -1);
+            transactions[idx] = { ...transactions[idx], ...txData };
+            applyAccountDelta(accounts, transactions[idx], +1);
+          }
+        } else {
+          transactions.unshift(txData);
+          applyAccountDelta(accounts, txData, +1);
+        }
+
+        DB.setTable('transactions', transactions);
+        DB.setTable('accounts', accounts);
+      }
+
+      function deleteTransactionRecord(txId) {
+        const transactions = DB.getTable('transactions');
+        const accounts = DB.getTable('accounts');
+        const idx = transactions.findIndex(t => t.id === txId);
+        if (idx === -1) return false;
+
+        applyAccountDelta(accounts, transactions[idx], -1);
+        transactions.splice(idx, 1);
+
+        DB.setTable('transactions', transactions);
+        DB.setTable('accounts', accounts);
+        return true;
+      }
+
+      function convertSavedTxRialToToman(txId) {
+        const tx = DB.getTable('transactions').find(t => t.id === txId);
+        if (!tx) return null;
+        const converted = Math.round(tx.amount / 10);
+        if (converted <= 0) return null;
+        saveTransactionRecord({ amount: converted }, txId);
+        renderAll();
+        return converted;
+      }
+
+      function quickCategorizeSmsTx(txId, categoryId) {
+        const transactions = DB.getTable('transactions');
+        const tx = transactions.find(t => t.id === txId);
+        if (!tx) return;
+        tx.categoryId = categoryId;
+        tx.isReviewed = true;
+        DB.setTable('transactions', transactions);
+        renderAll();
+        showSnackbar('دسته‌بندی تراکنش پیامکی با یک لمس ذخیره شد');
+      }
+
+      /* =========================================================
+         6. UI RENDERERS
+         ========================================================= */
+      function renderAll() {
+        renderDashboard();
+        renderBudgets();
+        renderAccounts();
+        renderSettings();
+      }
+
+      function renderDashboard() {
+        const ym = state.selectedYM;
+        document.getElementById('currentMonthLabel').textContent = formatJalaliMonthTitle(ym);
+        document.getElementById('budgetMonthLabel').textContent = formatJalaliMonthTitle(ym);
+
+        const accounts = DB.getTable('accounts');
+        const categories = DB.getTable('categories');
+        const allTx = DB.getTable('transactions');
+        const monthTx = allTx
+          .filter(t => t.jalaliYearMonth === ym)
+          .sort((a, b) => b.timestamp - a.timestamp);
+
+        const accMap = Object.fromEntries(accounts.map(a => [a.id, a]));
+        const catMap = Object.fromEntries(categories.map(c => [c.id, c]));
+
+        let totalIncome = 0;
+        let totalExpense = 0;
+        for (const t of monthTx) {
+          if (t.type === 'INCOME') totalIncome += t.amount;
+          else if (t.type === 'EXPENSE') totalExpense += t.amount;
+        }
+        const net = totalIncome - totalExpense;
+
+        document.getElementById('heroNetBalance').textContent = formatToman(net);
+        document.getElementById('heroIncome').textContent = formatToman(totalIncome);
+        document.getElementById('heroExpense').textContent = formatToman(totalExpense);
+
+        const pendingSms = allTx
+          .filter(t => t.source === 'SMS' && t.isReviewed === false)
+          .sort((a, b) => b.timestamp - a.timestamp);
+
+        const pendingEl = document.getElementById('pendingSmsContainer');
+        if (pendingSms.length > 0) {
+          const itemsHtml = pendingSms.map(tx => {
+            const acc = accMap[tx.accountId];
+            const quickCats = categories.filter(c => c.type === tx.type && !c.id.includes('uncat')).slice(0, 5);
+            const chipsHtml = quickCats.map(c => `
+              <button class="quick-chip" type="button" data-quick-tx="${escapeHtml(tx.id)}" data-quick-cat="${escapeHtml(c.id)}">
+                <span>${escapeHtml(c.icon)}</span>${escapeHtml(c.name)}
+              </button>
+            `).join('');
+
+            return `
+              <div class="pending-item">
+                <div class="pending-item-top">
+                  <div class="pending-item-meta">
+                    ${escapeHtml(tx.note || 'تراکنش پیامکی')}
+                    <small>${acc ? escapeHtml(acc.name) : ''} • ${formatJalaliDateShort(tx.timestamp)}</small>
+                  </div>
+                  <div class="tx-amount num-ltr ${tx.type.toLowerCase()}">
+                    ${tx.type === 'INCOME' ? '+' : '−'}${formatToman(tx.amount, false)}
+                  </div>
+                </div>
+                <div class="quick-cat-chips">${chipsHtml}</div>
+                <div class="pending-actions">
+                  <button class="pending-action-btn edit-transfer" type="button" data-pending-edit="${escapeHtml(tx.id)}">
+                    ✏️ ویرایش / تبدیل به انتقال
+                  </button>
+                  <button class="pending-action-btn delete-sms" type="button" data-pending-delete="${escapeHtml(tx.id)}">
+                    🗑️ حذف
+                  </button>
+                </div>
+              </div>
+            `;
+          }).join('');
+
+          pendingEl.innerHTML = `
+            <div class="pending-banner">
+              <div class="pending-header">
+                <div class="pending-title">
+                  <span>📩</span>
+                  تراکنش‌های پیامکی در انتظار بررسی
+                </div>
+                <span class="pending-badge">${toPersianDigits(pendingSms.length)} مورد</span>
+              </div>
+              <div class="pending-hint">دسته‌بندی تک‌لمسی انتخاب کنید یا تراکنش را ویرایش / به انتقال تبدیل نمایید:</div>
+              ${itemsHtml}
+            </div>
+          `;
+        } else {
+          pendingEl.innerHTML = '';
+        }
+
+        const rawQuery = (state.searchQuery || '').trim();
+        const queryNorm = toEnglishDigits(rawQuery).toLowerCase().replace(/ي/g, 'ی').replace(/ك/g, 'ک');
+        const queryDigits = queryNorm.replace(/[^\d]/g, '');
+
+        const filteredTx = monthTx.filter(t => {
+          if (state.txFilter === 'SMS' && t.source !== 'SMS') return false;
+          if (state.txFilter !== 'ALL' && state.txFilter !== 'SMS' && t.type !== state.txFilter) return false;
+
+          if (!queryNorm) return true;
+          const acc = accMap[t.accountId];
+          const toAcc = t.toAccountId ? accMap[t.toAccountId] : null;
+          const cat = catMap[t.categoryId];
+
+          const haystack = [
+            t.note || '',
+            cat ? cat.name : '',
+            acc ? acc.name : '',
+            acc ? acc.bankName : '',
+            toAcc ? toAcc.name : '',
+            t.type === 'TRANSFER' ? 'انتقال' : ''
+          ].join(' ').toLowerCase().replace(/ي/g, 'ی').replace(/ك/g, 'ک');
+
+          if (haystack.includes(queryNorm)) return true;
+          if (queryDigits && String(t.amount).includes(queryDigits)) return true;
+          return false;
+        });
+
+        document.getElementById('txCountLabel').textContent = `${toPersianDigits(filteredTx.length)} مورد`;
+        const listEl = document.getElementById('txListContainer');
+
+        if (filteredTx.length === 0) {
+          listEl.innerHTML = rawQuery ? `
+            <div class="empty-state">
+              <div style="font-size:24px; margin-bottom:6px;">🔍</div>
+              <div style="font-weight:700; margin-bottom:4px;">نتیجه‌ای برای «${escapeHtml(rawQuery)}» یافت نشد</div>
+              <div style="font-size:12px;">عبارت جستجو یا فیلتر فعال را تغییر دهید.</div>
+            </div>
+          ` : `
+            <div class="empty-state">
+              <div style="font-size:26px; margin-bottom:6px;">🧾</div>
+              <div style="font-weight:700; margin-bottom:4px;">تراکنشی در این ماه ثبت نشده است</div>
+              <div style="font-size:12px;">با دکمه «ثبت تراکنش» یا «شبیه‌ساز پیامک» اولین مورد را اضافه کنید.</div>
+            </div>
+          `;
+          return;
+        }
+
+        listEl.innerHTML = filteredTx.map(tx => {
+          const acc = accMap[tx.accountId];
+          const toAcc = tx.toAccountId ? accMap[tx.toAccountId] : null;
+          const cat = catMap[tx.categoryId];
+
+          const isTransfer = tx.type === 'TRANSFER';
+          const icon = isTransfer ? '🔁' : (cat ? escapeHtml(cat.icon) : '💳');
+          const safeColor = cat ? sanitizeColorHex(cat.colorHex) : '#64748b';
+          const bgColor = isTransfer ? 'var(--md-transfer-bg)' : `${safeColor}24`;
+          const title = isTransfer
+            ? `انتقال به ${toAcc ? escapeHtml(toAcc.name) : 'حساب دیگر'}`
+            : (cat ? escapeHtml(cat.name) : 'دسته‌بندی‌نشده');
+          const sign = tx.type === 'INCOME' ? '+' : (tx.type === 'EXPENSE' ? '−' : '⇄');
+          const accLabel = acc ? `${escapeHtml(acc.name)}${acc.isActive ? '' : ' (غیرفعال)'}` : '';
+          const subText = `${accLabel}${tx.note ? ` • ${escapeHtml(tx.note)}` : ''}`;
+
+          return `
+            <div class="tx-item" data-edit-tx="${escapeHtml(tx.id)}">
+              <div class="tx-icon" style="background:${bgColor}">${icon}</div>
+              <div class="tx-body">
+                <div class="tx-title-row">
+                  <div class="tx-title">${title}</div>
+                  ${tx.source === 'SMS' ? '<span class="tag-pill tag-sms">پیامک</span>' : ''}
+                  ${!tx.isReviewed ? '<span class="tag-pill tag-unreviewed">بررسی نشده</span>' : ''}
+                </div>
+                <div class="tx-sub">${subText}</div>
+              </div>
+              <div class="tx-right">
+                <div class="tx-amount num-ltr ${tx.type.toLowerCase()}">${sign} ${formatToman(tx.amount, false)}</div>
+                <div class="tx-date">${formatJalaliDateShort(tx.timestamp)}</div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      function renderBudgets() {
+        const ym = state.selectedYM;
+        const categories = DB.getTable('categories').filter(c => c.type === 'EXPENSE');
+        const budgets = DB.getTable('budgets').filter(b => b.jalaliYearMonth === ym);
+        const monthExpenses = DB.getTable('transactions').filter(t => t.jalaliYearMonth === ym && t.type === 'EXPENSE');
+
+        const spentByCat = {};
+        let totalExpense = 0;
+        for (const tx of monthExpenses) {
+          spentByCat[tx.categoryId] = (spentByCat[tx.categoryId] || 0) + tx.amount;
+          totalExpense += tx.amount;
+        }
+
+        const chartWrap = document.getElementById('expenseChartWrap');
+        if (totalExpense === 0) {
+          chartWrap.innerHTML = `<div style="font-size:12.5px; color:var(--md-on-surface-variant); padding:8px 0;">هنوز هزینه‌ای در این ماه ثبت نشده است.</div>`;
+        } else {
+          const allSlices = categories
+            .map(c => ({ name: c.name, colorHex: sanitizeColorHex(c.colorHex), spent: spentByCat[c.id] || 0 }))
+            .filter(c => c.spent > 0)
+            .sort((a, b) => b.spent - a.spent);
+
+          let displaySlices = allSlices;
+          if (allSlices.length > 4) {
+            const top4 = allSlices.slice(0, 4);
+            const otherSpent = allSlices.slice(4).reduce((sum, s) => sum + s.spent, 0);
+            displaySlices = [
+              ...top4,
+              { name: 'سایر', colorHex: '#94a3b8', spent: otherSpent }
+            ];
+          }
+
+          const r = 48;
+          const circ = 2 * Math.PI * r;
+          let offset = 0;
+          const circlesSvg = displaySlices.map(s => {
+            const pct = s.spent / totalExpense;
+            const dash = pct * circ;
+            const seg = `<circle cx="62" cy="62" r="${r}" fill="transparent" stroke="${s.colorHex}" stroke-width="15" stroke-dasharray="${dash} ${circ - dash}" stroke-dashoffset="${-offset}" />`;
+            offset += dash;
+            return seg;
+          }).join('');
+
+          const legendHtml = displaySlices.map(s => {
+            const pct = Math.round((s.spent / totalExpense) * 100);
+            return `
+              <div class="legend-row">
+                <div class="legend-left">
+                  <span class="legend-dot" style="background:${s.colorHex}"></span>
+                  <span class="legend-name">${escapeHtml(s.name)}</span>
+                </div>
+                <strong>${toPersianDigits(pct)}٪</strong>
+              </div>
+            `;
+          }).join('');
+
+          chartWrap.innerHTML = `
+            <div class="donut-chart-box">
+              <svg width="124" height="124" viewBox="0 0 124 124" style="transform:rotate(-90deg);">
+                <circle cx="62" cy="62" r="${r}" fill="transparent" stroke="var(--md-surface-variant)" stroke-width="15" />
+                ${circlesSvg}
+              </svg>
+              <div class="donut-center">
+                <span class="donut-center-label">کل هزینه</span>
+                <span class="donut-center-val">${formatToman(totalExpense, false)}</span>
+                <span class="donut-center-unit">تومان</span>
+              </div>
+            </div>
+            <div class="donut-legend">${legendHtml}</div>
+          `;
+        }
+
+        const budgetMap = Object.fromEntries(budgets.map(b => [b.categoryId, b]));
+        const container = document.getElementById('budgetListContainer');
+
+        container.innerHTML = categories.map(cat => {
+          const spent = spentByCat[cat.id] || 0;
+          const bdg = budgetMap[cat.id];
+          const limit = bdg ? bdg.limitAmount : 0;
+          const rawPct = limit > 0 ? Math.round((spent / limit) * 100) : 0;
+          const clampedPct = Math.min(rawPct, 100);
+
+          let barClass = 'progress-green';
+          let statusText = 'در محدوده امن';
+          if (limit === 0) {
+            statusText = 'بدون سقف بودجه';
+          } else if (rawPct >= 100) {
+            barClass = 'progress-red';
+            statusText = 'عبور از سقف بودجه!';
+          } else if (rawPct >= 80) {
+            barClass = 'progress-yellow';
+            statusText = 'نزدیک به سقف بودجه';
+          }
+
+          return `
+            <div class="budget-item">
+              <div class="budget-top">
+                <div class="budget-cat">
+                  <span>${escapeHtml(cat.icon)}</span>
+                  <span>${escapeHtml(cat.name)}</span>
+                </div>
+                <button class="budget-edit-btn" type="button" data-budget-cat="${escapeHtml(cat.id)}">
+                  ${limit > 0 ? 'ویرایش سقف' : '+ تعیین سقف'}
+                </button>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill ${barClass}" style="width:${limit > 0 ? clampedPct : 0}%"></div>
+              </div>
+              <div class="budget-meta">
+                <span>مصرف: <strong class="num-ltr">${formatToman(spent)}</strong></span>
+                <span>${limit > 0 ? `سقف: ${formatToman(limit)} (${toPersianDigits(rawPct)}٪)` : statusText}</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      function renderAccounts() {
+        const accounts = DB.getTable('accounts');
+        const activeTotal = accounts.filter(a => a.isActive).reduce((sum, a) => sum + a.balance, 0);
+        document.getElementById('totalAccountsBalance').textContent = formatToman(activeTotal);
+
+        const container = document.getElementById('accountsListContainer');
+        container.innerHTML = accounts.map(acc => `
+          <div class="account-card ${acc.isActive ? '' : 'inactive'}">
+            <div class="acc-left">
+              <div class="acc-badge">${acc.cardLast4 ? toPersianDigits(acc.cardLast4) : 'نقد'}</div>
+              <div>
+                <div class="acc-name">${escapeHtml(acc.name)}${acc.isActive ? '' : ' <small style="color:var(--md-on-surface-variant)">(غیرفعال)</small>'}</div>
+                <div class="acc-bank">${escapeHtml(acc.bankName)}${acc.cardLast4 ? ` • کارت ****${toPersianDigits(acc.cardLast4)}` : ''}</div>
+              </div>
+            </div>
+            <div class="acc-right">
+              <div class="acc-balance num-ltr ${acc.balance < 0 ? 'negative' : ''}">${formatToman(acc.balance)}</div>
+              <div class="acc-actions">
+                <button class="mini-btn" type="button" data-edit-acc="${escapeHtml(acc.id)}">ویرایش</button>
+                <button class="mini-btn" type="button" data-toggle-acc="${escapeHtml(acc.id)}">${acc.isActive ? 'غیرفعال' : 'فعال‌سازی'}</button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      function renderSettings() {
+        const grid = document.getElementById('dbStatsGrid');
+        const stats = [
+          { label: 'جدول accounts', count: DB.getTable('accounts').length },
+          { label: 'جدول categories', count: DB.getTable('categories').length },
+          { label: 'جدول transactions', count: DB.getTable('transactions').length },
+          { label: 'جدول budgets', count: DB.getTable('budgets').length }
+        ];
+        grid.innerHTML = stats.map(s => `
+          <div class="db-stat">
+            <strong>${toPersianDigits(s.count)}</strong>
+            <span>${s.label}</span>
+          </div>
+        `).join('');
+      }
+
+      function renderCategoryManager() {
+        const categories = DB.getTable('categories');
+        const expCats = categories.filter(c => c.type === 'EXPENSE');
+        const incCats = categories.filter(c => c.type === 'INCOME');
+
+        const renderGroup = (title, list) => `
+          <div style="font-size:12px; font-weight:800; color:var(--md-on-surface-variant); margin:8px 0 6px;">${title}</div>
+          <div class="cat-mgr-list">
+            ${list.map(c => {
+              const isSystemUncat = c.id === 'cat_uncat_exp' || c.id === 'cat_uncat_inc';
+              const safeColor = sanitizeColorHex(c.colorHex);
+              return `
+                <div class="cat-mgr-item">
+                  <div class="cat-mgr-left">
+                    <div class="cat-mgr-icon" style="background:${safeColor}24; border:1px solid ${safeColor}55;">${escapeHtml(c.icon)}</div>
+                    <div>
+                      <div style="font-size:13px; font-weight:700;">${escapeHtml(c.name)}</div>
+                      <div style="font-size:10.5px; color:var(--md-on-surface-variant);">${isSystemUncat ? 'دسته سیستمی پیامک' : (c.type === 'EXPENSE' ? 'هزینه' : 'درآمد')}</div>
+                    </div>
+                  </div>
+                  ${isSystemUncat
+                    ? '<span style="font-size:10.5px; color:var(--md-on-surface-variant);">ثابت</span>'
+                    : `<button class="mini-btn" type="button" data-edit-cat="${escapeHtml(c.id)}">ویرایش</button>`
+                  }
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `;
+
+        document.getElementById('categoryManagerList').innerHTML =
+          renderGroup('دسته‌های هزینه', expCats) + renderGroup('دسته‌های درآمد', incCats);
+      }
+
+      /* =========================================================
+         7. MODALS, JALALI DATE PICKER, FORMS & EXPORTS
+         ========================================================= */
+      function openModal(id) {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('open');
+      }
+
+      function closeModal(id) {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('open');
+      }
+
+      function openConfirmModal({ title, bodyHtml, okLabel = 'تایید', okClass = 'btn-danger', onConfirm }) {
+        document.getElementById('confirmModalTitle').textContent = title;
+        document.getElementById('confirmModalBody').innerHTML = bodyHtml;
+        const okBtn = document.getElementById('confirmModalOkBtn');
+        okBtn.textContent = okLabel;
+        okBtn.className = `btn ${okClass} btn-block`;
+        state.pendingConfirmAction = onConfirm;
+        openModal('confirmModal');
+      }
+
+      let snackTimer = null;
+      function showSnackbar(message) {
+        const el = document.getElementById('snackbar');
+        if (!el) return;
+        el.textContent = message;
+        el.classList.add('show');
+        clearTimeout(snackTimer);
+        snackTimer = setTimeout(() => el.classList.remove('show'), 3000);
+      }
+
+      function initJalaliDatePickerOptions(jy, jm, jd) {
+        const yearSel = document.getElementById('txDateYear');
+        const monthSel = document.getElementById('txDateMonth');
+
+        const baseYear = dateToJalali(new Date()).jy;
+        const minY = Math.min(baseYear - 5, jy - 1);
+        const maxY = Math.max(baseYear + 2, jy + 1);
+
+        let yHtml = '';
+        for (let y = maxY; y >= minY; y--) {
+          yHtml += `<option value="${y}">${toPersianDigits(y)}</option>`;
+        }
+        yearSel.innerHTML = yHtml;
+        yearSel.value = String(jy);
+
+        monthSel.innerHTML = JALALI_MONTHS.map((name, idx) =>
+          `<option value="${idx + 1}">${name}</option>`
+        ).join('');
+        monthSel.value = String(jm);
+
+        updateJalaliDayOptions(jy, jm, jd);
+      }
+
+      function updateJalaliDayOptions(jy, jm, preferredDay) {
+        const daySel = document.getElementById('txDateDay');
+        const maxDays = getJalaliMonthDays(jy, jm);
+        const clamped = Math.min(Math.max(1, preferredDay || 1), maxDays);
+        let dHtml = '';
+        for (let d = 1; d <= maxDays; d++) {
+          dHtml += `<option value="${d}">${toPersianDigits(d)}</option>`;
+        }
+        daySel.innerHTML = dHtml;
+        daySel.value = String(clamped);
+      }
+
+      function populateTxFormOptions(type, selectedAccId, selectedToAccId, selectedCatId) {
+        const allAccounts = DB.getTable('accounts');
+        const activeAccounts = allAccounts.filter(a => a.isActive);
+
+        const buildAccountOptions = (pinnedId) => {
+          const list = [...activeAccounts];
+          if (pinnedId && !list.some(a => a.id === pinnedId)) {
+            const inactiveAcc = allAccounts.find(a => a.id === pinnedId);
+            if (inactiveAcc) list.unshift(inactiveAcc);
+          }
+          return list.map(a => {
+            const inactiveTag = a.isActive ? '' : ' (غیرفعال)';
+            return `<option value="${escapeHtml(a.id)}">${escapeHtml(a.name)}${inactiveTag} (${formatToman(a.balance)})</option>`;
+          }).join('');
+        };
+
+        const accSelect = document.getElementById('txAccount');
+        const toAccSelect = document.getElementById('txToAccount');
+        const catSelect = document.getElementById('txCategory');
+
+        accSelect.innerHTML = buildAccountOptions(selectedAccId);
+        toAccSelect.innerHTML = buildAccountOptions(selectedToAccId);
+
+        if (selectedAccId && [...accSelect.options].some(o => o.value === selectedAccId)) {
+          accSelect.value = selectedAccId;
+        }
+        if (selectedToAccId && [...toAccSelect.options].some(o => o.value === selectedToAccId)) {
+          toAccSelect.value = selectedToAccId;
+        } else {
+          const otherActive = activeAccounts.find(a => a.id !== accSelect.value);
+          if (otherActive) toAccSelect.value = otherActive.id;
+        }
+
+        const isTransfer = type === 'TRANSFER';
+        document.getElementById('txToAccountGroup').style.display = isTransfer ? 'block' : 'none';
+        document.getElementById('txCategoryGroup').style.display = isTransfer ? 'none' : 'block';
+        document.getElementById('txAccountLabel').textContent = isTransfer ? 'حساب مبدأ' : 'حساب / کارت';
+
+        if (!isTransfer) {
+          const categories = DB.getTable('categories').filter(c => c.type === type);
+          catSelect.innerHTML = categories.map(c =>
+            `<option value="${escapeHtml(c.id)}">${escapeHtml(c.icon)} ${escapeHtml(c.name)}</option>`
+          ).join('');
+          if (selectedCatId && categories.some(c => c.id === selectedCatId)) {
+            catSelect.value = selectedCatId;
+          }
+        }
+      }
+
+      function setTxModalType(type) {
+        state.txModalType = type;
+        document.querySelectorAll('#txTypeSegmented .seg-btn').forEach(btn => {
+          btn.classList.remove('active-expense', 'active-income', 'active-transfer');
+          if (btn.dataset.type === type) {
+            btn.classList.add(`active-${type.toLowerCase()}`);
+          }
+        });
+        populateTxFormOptions(
+          type,
+          document.getElementById('txAccount').value,
+          document.getElementById('txToAccount').value,
+          document.getElementById('txCategory').value
+        );
+      }
+
+      function openTxModal(editTxId = null) {
+        const form = document.getElementById('txForm');
+        form.reset();
+        document.getElementById('txEditId').value = editTxId || '';
+        const deleteBtn = document.getElementById('txDeleteBtn');
+
+        if (editTxId) {
+          const tx = DB.getTable('transactions').find(t => t.id === editTxId);
+          if (!tx) return;
+          document.getElementById('txModalTitle').textContent = 'ویرایش تراکنش';
+          deleteBtn.style.display = 'inline-flex';
+          state.txModalType = tx.type;
+          document.querySelectorAll('#txTypeSegmented .seg-btn').forEach(btn => {
+            btn.classList.remove('active-expense', 'active-income', 'active-transfer');
+            if (btn.dataset.type === tx.type) btn.classList.add(`active-${tx.type.toLowerCase()}`);
+          });
+          populateTxFormOptions(tx.type, tx.accountId, tx.toAccountId, tx.categoryId);
+          document.getElementById('txAmount').value = toPersianDigits(tx.amount.toLocaleString('en-US'));
+          document.getElementById('txNote').value = tx.note || '';
+          const jDate = dateToJalali(new Date(tx.timestamp));
+          initJalaliDatePickerOptions(jDate.jy, jDate.jm, jDate.jd);
+        } else {
+          document.getElementById('txModalTitle').textContent = 'ثبت تراکنش جدید';
+          deleteBtn.style.display = 'none';
+          state.txModalType = 'EXPENSE';
+          document.querySelectorAll('#txTypeSegmented .seg-btn').forEach(btn => {
+            btn.classList.remove('active-expense', 'active-income', 'active-transfer');
+            if (btn.dataset.type === 'EXPENSE') btn.classList.add('active-expense');
+          });
+          populateTxFormOptions('EXPENSE', null, null, null);
+
+          const todayJ = dateToJalali(new Date());
+          const selY = Math.floor(state.selectedYM / 100);
+          const selM = state.selectedYM % 100;
+          if (selY === todayJ.jy && selM === todayJ.jm) {
+            initJalaliDatePickerOptions(todayJ.jy, todayJ.jm, todayJ.jd);
+          } else {
+            initJalaliDatePickerOptions(selY, selM, Math.min(todayJ.jd, getJalaliMonthDays(selY, selM)));
+          }
+        }
+        openModal('txModal');
+      }
+
+      function openBudgetModal(categoryId) {
+        const cat = DB.getTable('categories').find(c => c.id === categoryId);
+        const existing = DB.getTable('budgets').find(b => b.categoryId === categoryId && b.jalaliYearMonth === state.selectedYM);
+        document.getElementById('budgetCategoryId').value = categoryId;
+        document.getElementById('budgetModalTitle').textContent = `سقف بودجه «${cat ? cat.name : ''}»`;
+        document.getElementById('budgetLimitInput').value = existing ? toPersianDigits(existing.limitAmount.toLocaleString('en-US')) : '';
+        openModal('budgetModal');
+      }
+
+      function openAccountModal(accountId = null) {
+        const form = document.getElementById('accountForm');
+        form.reset();
+        document.getElementById('accEditId').value = accountId || '';
+        if (accountId) {
+          const acc = DB.getTable('accounts').find(a => a.id === accountId);
+          if (!acc) return;
+          document.getElementById('accountModalTitle').textContent = 'ویرایش حساب بانکی';
+          document.getElementById('accName').value = acc.name;
+          document.getElementById('accBankName').value = acc.bankName;
+          document.getElementById('accCardLast4').value = acc.cardLast4 || '';
+          const sign = acc.balance < 0 ? '-' : '';
+          document.getElementById('accBalance').value = sign + toPersianDigits(Math.abs(acc.balance).toLocaleString('en-US'));
+        } else {
+          document.getElementById('accountModalTitle').textContent = 'افزودن حساب بانکی';
+        }
+        openModal('accountModal');
+      }
+
+      function setCatModalType(type) {
+        state.catModalType = type;
+        document.querySelectorAll('#catTypeSegmented .seg-btn').forEach(btn => {
+          btn.classList.remove('active-expense', 'active-income');
+          if (btn.dataset.catType === type) {
+            btn.classList.add(type === 'INCOME' ? 'active-income' : 'active-expense');
+          }
+        });
+      }
+
+      function syncCategoryPickerHighlights() {
+        const curEmoji = document.getElementById('catIconInput').value.trim();
+        document.querySelectorAll('#catEmojiPicker .emoji-btn').forEach(b => {
+          b.classList.toggle('selected', b.dataset.emoji === curEmoji);
+        });
+        const curColor = document.getElementById('catColorInput').value.toLowerCase();
+        document.querySelectorAll('#catColorSwatches .color-swatch').forEach(s => {
+          s.classList.toggle('selected', s.dataset.color.toLowerCase() === curColor);
+        });
+      }
+
+      function openCategoryFormModal(catId = null) {
+        const form = document.getElementById('categoryForm');
+        form.reset();
+        document.getElementById('catEditId').value = catId || '';
+
+        if (catId) {
+          const cat = DB.getTable('categories').find(c => c.id === catId);
+          if (!cat) return;
+          document.getElementById('catFormModalTitle').textContent = 'ویرایش دسته‌بندی';
+          setCatModalType(cat.type);
+          document.getElementById('catNameInput').value = cat.name;
+          document.getElementById('catIconInput').value = cat.icon;
+          document.getElementById('catColorInput').value = sanitizeColorHex(cat.colorHex, '#ea580c');
+        } else {
+          document.getElementById('catFormModalTitle').textContent = 'افزودن دسته‌بندی جدید';
+          setCatModalType('EXPENSE');
+          document.getElementById('catIconInput').value = '☕';
+          document.getElementById('catColorInput').value = '#ea580c';
+        }
+        syncCategoryPickerHighlights();
+        openModal('categoryFormModal');
+      }
+
+      function triggerDownload(filename, content, mimeType) {
+        try {
+          const blob = new Blob([content], { type: mimeType });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = filename;
+          a.style.display = 'none';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          setTimeout(() => URL.revokeObjectURL(url), 1500);
+        } catch {
+          showSnackbar('خطا در دانلود فایل؛ لطفاً مجدداً تلاش کنید');
+        }
+      }
+
+      function csvSafeText(value) {
+        let str = String(value ?? '');
+        if (/^[=+\-@\t\r]/.test(str)) {
+          str = "'" + str;
+        }
+        return `"${str.replace(/"/g, '""')}"`;
+      }
+
+      function exportCsv() {
+        const accounts = Object.fromEntries(DB.getTable('accounts').map(a => [a.id, a.name]));
+        const categories = Object.fromEntries(DB.getTable('categories').map(c => [c.id, c.name]));
+        const header = ['id', 'type', 'amount_toman', 'account', 'to_account', 'category', 'jalaliYearMonth', 'jalaliDate', 'source', 'isReviewed', 'note']
+          .map(h => csvSafeText(h));
+
+        const rows = [header];
+        for (const t of DB.getTable('transactions')) {
+          rows.push([
+            csvSafeText(t.id),
+            csvSafeText(t.type),
+            String(Math.round(Number(t.amount) || 0)),
+            csvSafeText(accounts[t.accountId] || t.accountId),
+            csvSafeText(t.toAccountId ? (accounts[t.toAccountId] || t.toAccountId) : ''),
+            csvSafeText(t.categoryId ? (categories[t.categoryId] || t.categoryId) : ''),
+            String(t.jalaliYearMonth),
+            csvSafeText(formatJalaliDateShort(t.timestamp)),
+            csvSafeText(t.source),
+            csvSafeText(t.isReviewed ? 'true' : 'false'),
+            csvSafeText(t.note || '')
+          ]);
+        }
+        const csv = '\uFEFF' + rows.map(r => r.join(',')).join('\n');
+        triggerDownload(`jeebyar-transactions-${state.selectedYM}.csv`, csv, 'text/csv;charset=utf-8;');
+        showSnackbar('فایل CSV با موفقیت و ایمن‌سازی کامل دانلود شد');
+      }
+
+      function exportJson() {
+        const payload = {
+          exportedAt: new Date().toISOString(),
+          accounts: DB.getTable('accounts'),
+          categories: DB.getTable('categories'),
+          transactions: DB.getTable('transactions'),
+          budgets: DB.getTable('budgets')
+        };
+        triggerDownload(`jeebyar-backup-${state.selectedYM}.json`, JSON.stringify(payload, null, 2), 'application/json');
+        showSnackbar('پشتیبان کامل JSON دانلود شد');
+      }
+
+      /* =========================================================
+         7.5. PWA ENGINE & APK ASSET EXPORTER
+         ========================================================= */
+      const PWAManager = {
+        deferredPrompt: null,
+
+        getActiveColors() {
+          const style = getComputedStyle(document.documentElement);
+          return {
+            primary: style.getPropertyValue('--md-primary').trim() || '#1b6b5c',
+            surface: style.getPropertyValue('--md-surface').trim() || '#f5f7f6'
+          };
+        },
+
+        updateStatusBadges() {
+          const netEl = document.getElementById('pwaNetStatus');
+          const dispEl = document.getElementById('pwaDisplayStatus');
+
+          if (netEl) {
+            const online = navigator.onLine;
+            netEl.textContent = online ? '🟢 آنلاین' : '🟠 حالت آفلاین';
+            netEl.className = `pwa-status-pill ${online ? 'ok' : 'warn'}`;
+          }
+
+          if (dispEl) {
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+            dispEl.textContent = isStandalone ? '✅ نصب‌شده (تمام‌صفحه)' : '📱 حالت مرورگر';
+            dispEl.className = `pwa-status-pill ${isStandalone ? 'ok' : ''}`;
+          }
+        },
+
+        async registerServiceWorker() {
+          const swEl = document.getElementById('pwaSwStatus');
+          const isSecureOrigin = location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+
+          if (!('serviceWorker' in navigator)) {
+            if (swEl) swEl.textContent = '⚠️ مرورگر فاقد Service Worker';
+            return;
+          }
+
+          if (!isSecureOrigin) {
+            if (swEl) {
+              swEl.textContent = 'ℹ️ برای فعال‌سازی آفلاین روی HTTPS میزبانی کنید';
+              swEl.className = 'pwa-status-pill warn';
+            }
+            return;
+          }
+
+          try {
+            const reg = await navigator.serviceWorker.register('./sw.js', { scope: './' });
+            if (swEl) {
+              swEl.textContent = reg.active ? '✅ آفلاین فعال (SW)' : '✅ سرویس‌ورکر ثبت شد';
+              swEl.className = 'pwa-status-pill ok';
+            }
+          } catch {
+            if (swEl) {
+              swEl.textContent = '⚠️ فایل sw.js کنار index.html قرار گیرد';
+              swEl.className = 'pwa-status-pill warn';
+            }
+          }
+        },
+
+        setupInstallPrompt() {
+          const banner = document.getElementById('pwaInstallBanner');
+          const settingsBtn = document.getElementById('pwaInstallBtn');
+
+          window.addEventListener('beforeinstallprompt', e => {
+            e.preventDefault();
+            this.deferredPrompt = e;
+            if (banner) banner.classList.add('visible');
+            if (settingsBtn) settingsBtn.style.display = 'inline-flex';
+          });
+
+          window.addEventListener('appinstalled', () => {
+            this.deferredPrompt = null;
+            if (banner) banner.classList.remove('visible');
+            if (settingsBtn) settingsBtn.style.display = 'none';
+            this.updateStatusBadges();
+            showSnackbar('اپلیکیشن جیب‌یار با موفقیت روی دستگاه نصب شد');
+          });
+        },
+
+        async triggerInstall() {
+          if (!this.deferredPrompt) {
+            showSnackbar('از منوی مرورگر گزینه «Add to Home Screen / نصب برنامه» را انتخاب کنید');
+            return;
+          }
+          try {
+            this.deferredPrompt.prompt();
+            const choice = await this.deferredPrompt.userChoice;
+            if (choice && choice.outcome === 'accepted') {
+              showSnackbar('در حال نصب اپلیکیشن جیب‌یار...');
+            }
+            this.deferredPrompt = null;
+            document.getElementById('pwaInstallBanner')?.classList.remove('visible');
+            const settingsBtn = document.getElementById('pwaInstallBtn');
+            if (settingsBtn) settingsBtn.style.display = 'none';
+          } catch {
+            showSnackbar('نصب خودکار در این مرورگر در دسترس نیست');
+          }
+        },
+
+        downloadManifest() {
+          const colors = this.getActiveColors();
+          const manifestObj = {
+            id: './index.html',
+            name: 'جیب‌یار - مدیریت هوشمند بودجه و پیامک',
+            short_name: 'جیب‌یار',
+            description: 'مدیریت هوشمند بودجه، حساب‌های بانکی، تقویم جلالی و تحلیلگر ۳ لایه پیامک بانکی',
+            start_url: './index.html',
+            scope: './',
+            display: 'standalone',
+            display_override: ['standalone', 'minimal-ui'],
+            orientation: 'portrait',
+            dir: 'rtl',
+            lang: 'fa-IR',
+            theme_color: colors.primary,
+            background_color: colors.surface,
+            categories: ['finance', 'productivity'],
+            icons: [
+              { src: './icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
+              { src: './icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'maskable' },
+              { src: './icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
+              { src: './icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' }
+            ]
+          };
+          triggerDownload('manifest.json', JSON.stringify(manifestObj, null, 2), 'application/manifest+json');
+          showSnackbar('فایل manifest.json دانلود شد');
+        },
+
+        downloadServiceWorker() {
+          const swCode = `const CACHE_NAME = 'jeebyar-pwa-v1';
+const CORE_ASSETS = [
+  './',
+  './index.html',
+  './manifest.json',
+  './icon-192.png',
+  './icon-512.png'
+];
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(CORE_ASSETS))
+      .then(() => self.skipWaiting())
+  );
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
+    ).then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener('fetch', event => {
+  if (event.request.method !== 'GET') return;
+
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
+        .then(res => {
+          const copy = res.clone();
+          caches.open(CACHE_NAME).then(c => c.put('./index.html', copy));
+          return res;
+        })
+        .catch(() => caches.match('./index.html'))
+    );
+    return;
+  }
+
+  event.respondWith(
+    caches.match(event.request).then(cached => {
+      const networkFetch = fetch(event.request).then(res => {
+        if (res && res.status === 200) {
+          const copy = res.clone();
+          caches.open(CACHE_NAME).then(c => c.put(event.request, copy));
+        }
+        return res;
+      }).catch(() => cached);
+      return cached || networkFetch;
+    })
+  );
+});
+`;
+          triggerDownload('sw.js', swCode, 'application/javascript');
+          showSnackbar('فایل sw.js (سرویس‌ورکر آفلاین) دانلود شد');
+        },
+
+        downloadPngIcon(size) {
+          try {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            if (!ctx) {
+              showSnackbar('مرورگر از Canvas برای تولید آیکون پشتیبانی نمی‌کند');
+              return;
+            }
+
+            const paletteStops = {
+              emerald: ['#1b6b5c', '#0f4c41'],
+              ocean:   ['#2563eb', '#1e3a8a'],
+              violet:  ['#7c3aed', '#4c1d95'],
+              sunset:  ['#ea580c', '#9a3412'],
+              rose:    ['#db2777', '#831843'],
+              gold:    ['#b45309', '#292524']
+            };
+            const stops = paletteStops[ThemeManager.palette] || paletteStops.emerald;
+
+            const grad = ctx.createLinearGradient(0, 0, size, size);
+            grad.addColorStop(0, stops[0]);
+            grad.addColorStop(1, stops[1]);
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, size, size);
+
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.beginPath();
+            ctx.arc(size * 0.2, size * 0.18, size * 0.28, 0, Math.PI * 2);
+            ctx.fill();
+
+            const s = size / 128;
+            ctx.save();
+            ctx.scale(s, s);
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 7.5;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            ctx.beginPath();
+            ctx.moveTo(92, 46);
+            ctx.lineTo(92, 36);
+            ctx.quadraticCurveTo(92, 30, 86, 30);
+            ctx.lineTo(38, 30);
+            ctx.arc(38, 39, 9, -Math.PI / 2, Math.PI / 2, true);
+            ctx.lineTo(92, 48);
+            ctx.quadraticCurveTo(98, 48, 98, 54);
+            ctx.lineTo(98, 66);
+            ctx.lineTo(84, 66);
+            ctx.arc(84, 75, 9, -Math.PI / 2, Math.PI / 2, true);
+            ctx.lineTo(98, 84);
+            ctx.lineTo(98, 92);
+            ctx.quadraticCurveTo(98, 98, 92, 98);
+            ctx.lineTo(38, 98);
+            ctx.quadraticCurveTo(29, 98, 29, 89);
+            ctx.lineTo(29, 39);
+            ctx.stroke();
+
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.arc(84, 75, 4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+
+            const triggerLink = (href, shouldRevoke) => {
+              const a = document.createElement('a');
+              a.href = href;
+              a.download = `icon-${size}.png`;
+              a.style.display = 'none';
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+              if (shouldRevoke) setTimeout(() => URL.revokeObjectURL(href), 1500);
+              showSnackbar(`آیکون icon-${size}.png با تم فعلی دانلود شد`);
+            };
+
+            if (typeof canvas.toBlob === 'function') {
+              canvas.toBlob(blob => {
+                if (blob) {
+                  triggerLink(URL.createObjectURL(blob), true);
+                } else {
+                  triggerLink(canvas.toDataURL('image/png'), false);
+                }
+              }, 'image/png');
+            } else {
+              triggerLink(canvas.toDataURL('image/png'), false);
+            }
+          } catch {
+            showSnackbar('خطا در تولید فایل آیکون PNG');
+          }
+        },
+
+        init() {
+          this.updateStatusBadges();
+          this.setupInstallPrompt();
+          this.registerServiceWorker();
+          window.addEventListener('online', () => this.updateStatusBadges());
+          window.addEventListener('offline', () => this.updateStatusBadges());
+        }
+      };
+
+      /* =========================================================
+         8. EVENT LISTENERS & INITIALIZATION
+         ========================================================= */
+      function initCategoryPickers() {
+        document.getElementById('catEmojiPicker').innerHTML = PRESET_EMOJIS.map(em =>
+          `<button type="button" class="emoji-btn" data-emoji="${em}">${em}</button>`
+        ).join('');
+
+        document.getElementById('catColorSwatches').innerHTML = PRESET_COLORS.map(hex =>
+          `<button type="button" class="color-swatch" data-color="${hex}" style="background:${hex};" aria-label="${hex}"></button>`
+        ).join('');
+      }
+
+      function bindEvents() {
+        // Theme Modal & Quick Toggles
+        document.getElementById('openThemeModalBtn').addEventListener('click', () => {
+          ThemeManager.syncUI();
+          openModal('themeModal');
+        });
+        document.getElementById('themeToggleBtn').addEventListener('click', () => ThemeManager.toggleLightDark());
+
+        // Mode switcher (both Settings & Theme Modal)
+        ['settingsModeSwitcher', 'modalModeSwitcher'].forEach(id => {
+          document.getElementById(id).addEventListener('click', e => {
+            const btn = e.target.closest('[data-mode]');
+            if (btn) ThemeManager.setMode(btn.dataset.mode, true);
+          });
+        });
+
+        // Palette selection grids (both Settings & Theme Modal)
+        ['settingsThemeGrid', 'modalThemeGrid'].forEach(id => {
+          document.getElementById(id).addEventListener('click', e => {
+            const card = e.target.closest('[data-select-palette]');
+            if (card) ThemeManager.setPalette(card.dataset.selectPalette, true);
+          });
+        });
+
+        // Navigation
+        document.querySelectorAll('.nav-item').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const view = btn.dataset.view;
+            state.activeView = view;
+            document.querySelectorAll('.nav-item').forEach(b => b.classList.toggle('active', b === btn));
+            document.querySelectorAll('.view-section').forEach(s => s.classList.toggle('active', s.id === `view-${view}`));
+          });
+        });
+
+        // Month switchers
+        const shiftMonth = delta => {
+          state.selectedYM = shiftJalaliYearMonth(state.selectedYM, delta);
+          renderAll();
+        };
+        document.getElementById('prevMonthBtn').addEventListener('click', () => shiftMonth(-1));
+        document.getElementById('nextMonthBtn').addEventListener('click', () => shiftMonth(1));
+        document.getElementById('prevMonthBtnBudget').addEventListener('click', () => shiftMonth(-1));
+        document.getElementById('nextMonthBtnBudget').addEventListener('click', () => shiftMonth(1));
+
+        // Live Search
+        const searchInput = document.getElementById('txSearchInput');
+        const searchClear = document.getElementById('txSearchClear');
+        searchInput.addEventListener('input', e => {
+          state.searchQuery = e.target.value;
+          searchClear.classList.toggle('visible', Boolean(state.searchQuery.trim()));
+          renderDashboard();
+        });
+        searchClear.addEventListener('click', () => {
+          state.searchQuery = '';
+          searchInput.value = '';
+          searchClear.classList.remove('visible');
+          renderDashboard();
+          searchInput.focus();
+        });
+
+        // Transaction filter pills
+        document.getElementById('txFilterPills').addEventListener('click', e => {
+          const btn = e.target.closest('.filter-pill');
+          if (!btn) return;
+          state.txFilter = btn.dataset.filter;
+          document.querySelectorAll('.filter-pill').forEach(p => p.classList.toggle('active', p === btn));
+          renderDashboard();
+        });
+
+        // Pending SMS Banner Delegated Actions
+        document.getElementById('pendingSmsContainer').addEventListener('click', e => {
+          const chip = e.target.closest('.quick-chip');
+          if (chip) {
+            quickCategorizeSmsTx(chip.dataset.quickTx, chip.dataset.quickCat);
+            return;
+          }
+          const editBtn = e.target.closest('[data-pending-edit]');
+          if (editBtn) {
+            openTxModal(editBtn.dataset.pendingEdit);
+            return;
+          }
+          const delBtn = e.target.closest('[data-pending-delete]');
+          if (delBtn) {
+            const txId = delBtn.dataset.pendingDelete;
+            if (deleteTransactionRecord(txId)) {
+              renderAll();
+              showSnackbar('تراکنش پیامکی حذف و موجودی حساب اصلاح شد');
+            }
+          }
+        });
+
+        // Transactions List Click -> Edit
+        document.getElementById('txListContainer').addEventListener('click', e => {
+          const item = e.target.closest('.tx-item');
+          if (item) openTxModal(item.dataset.editTx);
+        });
+
+        // Budget Edit Click
+        document.getElementById('budgetListContainer').addEventListener('click', e => {
+          const btn = e.target.closest('[data-budget-cat]');
+          if (btn) openBudgetModal(btn.dataset.budgetCat);
+        });
+
+        // Accounts Actions
+        document.getElementById('accountsListContainer').addEventListener('click', e => {
+          const editBtn = e.target.closest('[data-edit-acc]');
+          if (editBtn) { openAccountModal(editBtn.dataset.editAcc); return; }
+
+          const toggleBtn = e.target.closest('[data-toggle-acc]');
+          if (toggleBtn) {
+            const accounts = DB.getTable('accounts');
+            const acc = accounts.find(a => a.id === toggleBtn.dataset.toggleAcc);
+            if (!acc) return;
+
+            if (acc.isActive) {
+              const activeCount = accounts.filter(a => a.isActive).length;
+              if (activeCount <= 1) {
+                showSnackbar('امکان غیرفعال کردن آخرین حساب فعال وجود ندارد');
+                return;
+              }
+            }
+            acc.isActive = !acc.isActive;
+            DB.setTable('accounts', accounts);
+            renderAll();
+            showSnackbar(acc.isActive ? 'حساب فعال شد' : 'حساب غیرفعال شد');
+          }
+        });
+
+        // Category Manager Open & Edit
+        const openCatMgr = () => {
+          renderCategoryManager();
+          openModal('categoryManagerModal');
+        };
+        document.getElementById('openCatMgrBtn').addEventListener('click', openCatMgr);
+        document.getElementById('openCatMgrFromBudgetBtn').addEventListener('click', openCatMgr);
+        document.getElementById('addNewCategoryBtn').addEventListener('click', () => openCategoryFormModal(null));
+        document.getElementById('categoryManagerList').addEventListener('click', e => {
+          const btn = e.target.closest('[data-edit-cat]');
+          if (btn) openCategoryFormModal(btn.dataset.editCat);
+        });
+
+        document.getElementById('catTypeSegmented').addEventListener('click', e => {
+          const btn = e.target.closest('[data-cat-type]');
+          if (btn) setCatModalType(btn.dataset.catType);
+        });
+
+        document.getElementById('catEmojiPicker').addEventListener('click', e => {
+          const btn = e.target.closest('.emoji-btn');
+          if (!btn) return;
+          document.getElementById('catIconInput').value = btn.dataset.emoji;
+          syncCategoryPickerHighlights();
+        });
+
+        document.getElementById('catColorSwatches').addEventListener('click', e => {
+          const btn = e.target.closest('.color-swatch');
+          if (!btn) return;
+          document.getElementById('catColorInput').value = btn.dataset.color;
+          syncCategoryPickerHighlights();
+        });
+
+        document.getElementById('catIconInput').addEventListener('input', syncCategoryPickerHighlights);
+        document.getElementById('catColorInput').addEventListener('input', syncCategoryPickerHighlights);
+
+        document.getElementById('categoryForm').addEventListener('submit', e => {
+          e.preventDefault();
+          const editId = document.getElementById('catEditId').value || null;
+          const name = document.getElementById('catNameInput').value.trim();
+          const icon = document.getElementById('catIconInput').value.trim() || '🏷️';
+          const colorHex = sanitizeColorHex(document.getElementById('catColorInput').value, '#1b6b5c');
+          const type = state.catModalType;
+
+          if (!name) {
+            showSnackbar('نام دسته‌بندی را وارد کنید');
+            return;
+          }
+
+          const categories = DB.getTable('categories');
+          if (editId) {
+            const idx = categories.findIndex(c => c.id === editId);
+            if (idx !== -1) {
+              categories[idx] = { ...categories[idx], name, icon, colorHex, type };
+            }
+          } else {
+            categories.push({ id: genId('cat'), name, type, icon, colorHex });
+          }
+
+          DB.setTable('categories', categories);
+          closeModal('categoryFormModal');
+          renderCategoryManager();
+          renderAll();
+          showSnackbar(editId ? 'دسته‌بندی ویرایش شد' : 'دسته‌بندی جدید اضافه شد');
+        });
+
+        // Modals Open / Close
+        document.getElementById('openTxModalBtn').addEventListener('click', () => openTxModal(null));
+        document.getElementById('openSmsModalBtn').addEventListener('click', () => {
+          document.getElementById('smsParserResult').className = 'parser-result';
+          openModal('smsModal');
+        });
+        document.getElementById('addAccountBtn').addEventListener('click', () => openAccountModal(null));
+
+        document.querySelectorAll('[data-close]').forEach(btn => {
+          btn.addEventListener('click', () => closeModal(btn.dataset.close));
+        });
+        document.querySelectorAll('.overlay').forEach(ov => {
+          ov.addEventListener('click', e => {
+            if (e.target === ov) ov.classList.remove('open');
+          });
+        });
+
+        // Confirm Modal Action
+        document.getElementById('confirmModalOkBtn').addEventListener('click', () => {
+          const fn = state.pendingConfirmAction;
+          state.pendingConfirmAction = null;
+          closeModal('confirmModal');
+          if (typeof fn === 'function') fn();
+        });
+
+        // Jalali Date Picker dynamic day count update
+        const syncPickerDays = () => {
+          const jy = parseInt(document.getElementById('txDateYear').value, 10);
+          const jm = parseInt(document.getElementById('txDateMonth').value, 10);
+          const curDay = parseInt(document.getElementById('txDateDay').value, 10);
+          updateJalaliDayOptions(jy, jm, curDay);
+        };
+        document.getElementById('txDateYear').addEventListener('change', syncPickerDays);
+        document.getElementById('txDateMonth').addEventListener('change', syncPickerDays);
+
+        // Live thousand separators
+        ['txAmount', 'budgetLimitInput'].forEach(id => {
+          document.getElementById(id).addEventListener('input', e => {
+            const num = parseNumericInput(e.target.value);
+            e.target.value = num ? toPersianDigits(num.toLocaleString('en-US')) : '';
+          });
+        });
+
+        document.getElementById('accBalance').addEventListener('input', e => {
+          const raw = toEnglishDigits(e.target.value).trim();
+          if (raw === '-' || raw === '−') {
+            e.target.value = '-';
+            return;
+          }
+          const num = parseSignedNumericInput(raw);
+          if (!raw.replace(/[^\d]/g, '')) {
+            e.target.value = '';
+            return;
+          }
+          e.target.value = (num < 0 ? '-' : '') + toPersianDigits(Math.abs(num).toLocaleString('en-US'));
+        });
+
+        // Transaction segmented control & form submit
+        document.getElementById('txTypeSegmented').addEventListener('click', e => {
+          const btn = e.target.closest('.seg-btn');
+          if (btn) setTxModalType(btn.dataset.type);
+        });
+
+        document.getElementById('txForm').addEventListener('submit', e => {
+          e.preventDefault();
+          const amount = parseNumericInput(document.getElementById('txAmount').value);
+          if (amount <= 0) { showSnackbar('مبلغ معتبر وارد کنید'); return; }
+
+          const type = state.txModalType;
+          const accountId = document.getElementById('txAccount').value;
+          const toAccountId = type === 'TRANSFER' ? document.getElementById('txToAccount').value : null;
+          if (type === 'TRANSFER' && accountId === toAccountId) {
+            showSnackbar('حساب مبدأ و مقصد نمی‌تواند یکسان باشد');
+            return;
+          }
+
+          const jy = parseInt(document.getElementById('txDateYear').value, 10);
+          const jm = parseInt(document.getElementById('txDateMonth').value, 10);
+          const jd = parseInt(document.getElementById('txDateDay').value, 10);
+
+          const editId = document.getElementById('txEditId').value || null;
+          const existingTx = editId ? DB.getTable('transactions').find(t => t.id === editId) : null;
+          const refTime = existingTx ? new Date(existingTx.timestamp) : new Date();
+          const timestamp = jalaliToTimestamp(jy, jm, jd, refTime.getHours(), refTime.getMinutes(), refTime.getSeconds());
+          const jalaliYearMonth = jy * 100 + jm;
+
+          const txPayload = {
+            id: editId || genId('tx'),
+            accountId,
+            toAccountId,
+            categoryId: type === 'TRANSFER' ? null : document.getElementById('txCategory').value,
+            amount,
+            type,
+            timestamp,
+            jalaliYearMonth,
+            source: existingTx ? existingTx.source : 'MANUAL',
+            smsHash: existingTx ? existingTx.smsHash : null,
+            note: document.getElementById('txNote').value.trim(),
+            isReviewed: true
+          };
+
+          saveTransactionRecord(txPayload, editId);
+          closeModal('txModal');
+          renderAll();
+          showSnackbar(editId ? 'تراکنش ویرایش شد' : 'تراکنش با موفقیت ثبت شد');
+        });
+
+        document.getElementById('txDeleteBtn').addEventListener('click', () => {
+          const editId = document.getElementById('txEditId').value;
+          if (!editId) return;
+          deleteTransactionRecord(editId);
+          closeModal('txModal');
+          renderAll();
+          showSnackbar('تراکنش حذف و موجودی حساب اصلاح شد');
+        });
+
+        // SMS Simulator Samples & Parser Execution
+        document.getElementById('smsSampleButtons').addEventListener('click', e => {
+          const btn = e.target.closest('[data-sample]');
+          if (!btn) return;
+          document.getElementById('smsInput').value = SMS_SAMPLES[btn.dataset.sample];
+          document.getElementById('smsParserResult').className = 'parser-result';
+        });
+
+        document.getElementById('runSmsParserBtn').addEventListener('click', () => {
+          const raw = document.getElementById('smsInput').value;
+          const res = BankSmsParser.parseAndSave(raw);
+          const box = document.getElementById('smsParserResult');
+
+          let cls = 'success';
+          if (res.status === 'otp_blocked' || res.status === 'error') cls = 'danger';
+          else if (res.status === 'duplicate' || res.rialBankWarning) cls = 'warning';
+
+          let rialBtnHtml = '';
+          if (res.status === 'success' && res.rialBankWarning && res.tx) {
+            rialBtnHtml = `
+              <div class="rial-convert-box" id="rialConvertBox">
+                <div style="font-weight:700; font-size:11.5px;">
+                  آیا مبلغ این پیامک به ریال بوده است؟ (معادل ${formatToman(res.rialBankWarning.convertedAmount)})
+                </div>
+                <button class="btn btn-warning btn-block" type="button" data-convert-rial-tx="${escapeHtml(res.tx.id)}" style="padding:8px 12px; font-size:12px;">
+                  🔄 تبدیل مبلغ ثبت‌شده از ریال به تومان (÷۱۰)
+                </button>
+              </div>
+            `;
+          }
+
+          box.className = `parser-result show ${cls}`;
+          box.innerHTML = `
+            <div style="font-weight:800; margin-bottom:4px;">${escapeHtml(res.title)}</div>
+            <ul class="parser-steps">
+              ${res.steps.map(s => `<li>${escapeHtml(s)}</li>`).join('')}
+            </ul>
+            ${rialBtnHtml}
+          `;
+
+          if (res.status === 'success') {
+            renderAll();
+            showSnackbar('پیامک بانکی تحلیل و در لیست انتظار بررسی ثبت شد');
+          } else if (res.status === 'otp_blocked') {
+            showSnackbar('هشدار امنیتی: پیامک رمز پویا مسدود شد');
+          } else if (res.status === 'duplicate') {
+            showSnackbar('پیامک تکراری شناسایی شد و ثبت نگردید');
+          }
+        });
+
+        document.getElementById('smsParserResult').addEventListener('click', e => {
+          const btn = e.target.closest('[data-convert-rial-tx]');
+          if (!btn) return;
+          const txId = btn.dataset.convertRialTx;
+          const newAmount = convertSavedTxRialToToman(txId);
+          if (newAmount !== null) {
+            const box = document.getElementById('rialConvertBox');
+            if (box) {
+              box.innerHTML = `<div style="font-weight:800; color:var(--md-income);">✅ مبلغ تراکنش به ${formatToman(newAmount)} تبدیل و موجودی حساب اصلاح شد.</div>`;
+            }
+            showSnackbar(`مبلغ تراکنش به ${formatToman(newAmount)} تبدیل شد`);
+          }
+        });
+
+        // Budget Form
+        document.getElementById('budgetForm').addEventListener('submit', e => {
+          e.preventDefault();
+          const categoryId = document.getElementById('budgetCategoryId').value;
+          const limitAmount = parseNumericInput(document.getElementById('budgetLimitInput').value);
+          const budgets = DB.getTable('budgets');
+          const idx = budgets.findIndex(b => b.categoryId === categoryId && b.jalaliYearMonth === state.selectedYM);
+
+          if (limitAmount <= 0) {
+            if (idx !== -1) budgets.splice(idx, 1);
+          } else if (idx !== -1) {
+            budgets[idx].limitAmount = limitAmount;
+          } else {
+            budgets.push({ id: genId('bdg'), categoryId, jalaliYearMonth: state.selectedYM, limitAmount });
+          }
+
+          DB.setTable('budgets', budgets);
+          closeModal('budgetModal');
+          renderAll();
+          showSnackbar('سقف بودجه ماهانه به‌روزرسانی شد');
+        });
+
+        // Account Form
+        document.getElementById('accountForm').addEventListener('submit', e => {
+          e.preventDefault();
+          const editId = document.getElementById('accEditId').value || null;
+          const name = document.getElementById('accName').value.trim();
+          const bankName = document.getElementById('accBankName').value.trim();
+          const cardLast4 = toEnglishDigits(document.getElementById('accCardLast4').value).replace(/[^\d]/g, '').slice(-4);
+          const balance = parseSignedNumericInput(document.getElementById('accBalance').value);
+
+          const accounts = DB.getTable('accounts');
+          if (editId) {
+            const idx = accounts.findIndex(a => a.id === editId);
+            if (idx !== -1) accounts[idx] = { ...accounts[idx], name, bankName, cardLast4, balance };
+          } else {
+            accounts.push({ id: genId('acc'), name, bankName, cardLast4, balance, isActive: true });
+          }
+
+          DB.setTable('accounts', accounts);
+          closeModal('accountModal');
+          renderAll();
+          showSnackbar(editId ? 'اطلاعات حساب ویرایش شد' : 'حساب جدید اضافه شد');
+        });
+
+        // PWA Install & APK Asset Downloads
+        document.getElementById('pwaBannerInstallBtn').addEventListener('click', () => PWAManager.triggerInstall());
+        document.getElementById('pwaInstallBtn').addEventListener('click', () => PWAManager.triggerInstall());
+        document.getElementById('dlManifestBtn').addEventListener('click', () => PWAManager.downloadManifest());
+        document.getElementById('dlSwBtn').addEventListener('click', () => PWAManager.downloadServiceWorker());
+        document.getElementById('dlIcon192Btn').addEventListener('click', () => PWAManager.downloadPngIcon(192));
+        document.getElementById('dlIcon512Btn').addEventListener('click', () => PWAManager.downloadPngIcon(512));
+
+        // Settings Export / Import / Reset Demo
+        document.getElementById('exportCsvBtn').addEventListener('click', exportCsv);
+        document.getElementById('exportJsonBtn').addEventListener('click', exportJson);
+
+        const importInput = document.getElementById('importJsonInput');
+        document.getElementById('importJsonBtn').addEventListener('click', () => {
+          importInput.value = '';
+          importInput.click();
+        });
+
+        importInput.addEventListener('change', e => {
+          const file = e.target.files && e.target.files[0];
+          if (!file) return;
+
+          const reader = new FileReader();
+          reader.onload = () => {
+            let parsed;
+            try {
+              parsed = JSON.parse(String(reader.result || ''));
+            } catch {
+              showSnackbar('خطا: فایل انتخاب‌شده JSON معتبر نیست');
+              return;
+            }
+
+            const check = DB.validateBackupPayload(parsed);
+            if (!check.valid) {
+              showSnackbar(`خطای اعتبارسنجی: ${check.error}`);
+              return;
+            }
+
+            openConfirmModal({
+              title: 'تایید بازیابی پشتیبان JSON',
+              bodyHtml: `
+                فایل پشتیبان با موفقیت اعتبارسنجی شد و جایگزین داده‌های فعلی خواهد شد:<br><br>
+                • حساب‌ها: <strong>${toPersianDigits(parsed.accounts.length)}</strong> مورد<br>
+                • دسته‌بندی‌ها: <strong>${toPersianDigits(parsed.categories.length)}</strong> مورد<br>
+                • تراکنش‌ها: <strong>${toPersianDigits(parsed.transactions.length)}</strong> مورد<br>
+                • بودجه‌ها: <strong>${toPersianDigits(parsed.budgets.length)}</strong> مورد
+              `,
+              okLabel: 'بازیابی و جایگزینی',
+              okClass: 'btn-primary',
+              onConfirm: () => {
+                DB.setTable('accounts', parsed.accounts);
+                DB.setTable('categories', parsed.categories);
+                DB.setTable('transactions', parsed.transactions);
+                DB.setTable('budgets', parsed.budgets);
+                renderAll();
+                showSnackbar('پشتیبان JSON با موفقیت بازیابی شد');
+              }
+            });
+          };
+          reader.onerror = () => showSnackbar('خطا در خواندن فایل انتخاب‌شده');
+          reader.readAsText(file, 'utf-8');
+        });
+
+        document.getElementById('resetDemoBtn').addEventListener('click', () => {
+          openConfirmModal({
+            title: 'بازگردانی داده‌های نمونه',
+            bodyHtml: 'آیا مطمئن هستید؟ تمامی تراکنش‌ها، حساب‌ها، دسته‌بندی‌های دلخواه و سقف‌های بودجه فعلی پاک شده و داده‌های نمونه اولیه بارگذاری می‌شوند.',
+            okLabel: 'بله، بازگردانی شود',
+            okClass: 'btn-danger',
+            onConfirm: () => {
+              DB.seedDemoData();
+              state.selectedYM = getJalaliYearMonth(new Date());
+              state.searchQuery = '';
+              searchInput.value = '';
+              searchClear.classList.remove('visible');
+              renderAll();
+              showSnackbar('داده‌های نمونه با موفقیت بازگردانی شدند');
+            }
+          });
+        });
+      }
+
+      // Bootstrap
+      ThemeManager.init();
+      if (!DB.isInitialized()) {
+        DB.seedDemoData();
+      }
+      initCategoryPickers();
+      bindEvents();
+      renderAll();
+      PWAManager.init();
+    })();
+  </script>
+</body>
+</html>
